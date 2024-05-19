@@ -146,12 +146,12 @@
 
         game {
             bindings = <
-&trans  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &to 0
-&trans  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LEFT_ALT  &kp LCTRL  &trans  &kp TAB  &kp ESC  &trans  &trans  &trans  &trans
-                                                          &trans   &trans  &trans  &trans  &trans
+&trans    &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &to 0
+&trans    &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
+&kp CAPS  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
+&trans    &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
+&trans    &kp M   &kp LEFT_ALT  &kp LCTRL  &trans  &kp TAB  &kp ESC  &trans  &trans  &trans  &trans
+                                                            &trans   &trans  &trans  &trans  &trans
             >;
         };
     };

@@ -153,6 +153,8 @@
 &trans    &kp M   &kp LEFT_ALT  &kp LCTRL  &trans  &kp TAB  &kp ESC  &trans  &trans  &trans  &trans
                                                             &trans   &trans  &trans  &trans  &trans
             >;
+
+            label = "game";
         };
     };
 };

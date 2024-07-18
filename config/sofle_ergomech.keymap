@@ -120,7 +120,7 @@
             //                |      |       |       |      |      |  |      |      |      |       |      |
 
             bindings = <
-&none       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR        &trans      &trans    &trans          &to 3          &to 4
+&none       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR        &to 3       &to 4     &trans          &none          &kp EQUAL
 &none       &none         &none         &none         &trans        &none         &kp PG_UP         &trans      &kp UP    &trans          &kp BACKSLASH  &kp DEL
 &kp K_REDO  &kp K_APP     &none         &none         &trans        &kp CLCK      &kp PG_DN         &kp LEFT    &kp DOWN  &kp RIGHT       &trans         &kp BSPC
 &kp K_UNDO  &kp K_CUT     &kp K_COPY    &kp K_PASTE   &none         &none         &trans            &trans      &trans    &trans          &kp BACKSLASH  &to 0

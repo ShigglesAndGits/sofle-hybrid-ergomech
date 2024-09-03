@@ -123,7 +123,7 @@
 &none       &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR        &to 3       &to 4     &trans          &none          &kp EQUAL
 &kp K_APP   &none         &none         &none         &trans        &none         &kp PG_UP         &trans      &kp UP    &trans          &kp BACKSLASH  &kp DEL
 &kp K_REDO  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp PG_DN         &kp LEFT    &kp DOWN  &kp RIGHT       &trans         &kp BSPC
-&kp K_UNDO  &kp K_CUT     &kp K_COPY    &kp K_PASTE   &kp CAPS      &none         &trans            &trans      &trans    &trans          &kp BACKSLASH  &to 0
+&kp K_UNDO  &kp K_CUT     &kp K_COPY    &kp K_PASTE   &kp CAPS      &none         &trans            &trans      &trans    &trans          &kp BACKSLASH  &kp RIGHT_SHIFT
 &trans      &trans        &trans        &trans        &trans        &trans        &trans            &trans      &trans    &trans          &trans
                                                                                   &kp C_PLAY_PAUSE  &kp C_NEXT  &none     &kp C_PREVIOUS  &kp C_STOP
             >;

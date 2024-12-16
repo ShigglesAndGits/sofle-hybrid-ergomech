@@ -133,12 +133,12 @@
 
         num_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &none         &none         &none          &none       &none       &none
-&trans  &trans  &trans  &trans  &trans  &trans  &kp N7        &kp N8        &kp N9         &kp SLASH   &kp COLON   &kp BACKSPACE
-&trans  &trans  &trans  &trans  &trans  &trans  &kp NUMBER_4  &kp N5        &kp N6         &kp MINUS   &kp LS(N9)  &kp LS(N0)
-&trans  &trans  &trans  &trans  &trans  &trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3   &kp PLUS    &kp LS(LT)  &kp LS(GT)
-&trans  &trans  &trans  &trans  &trans  &to 0   &to 0         &kp N0        &kp BACKSPACE  &kp PERIOD  &kp ENTER
-                                                &trans        &trans        &trans         &trans      &trans
+&trans  &trans      &trans  &trans  &trans  &trans  &none         &none         &none          &none       &none       &none
+&trans  &trans      &trans  &trans  &trans  &trans  &kp N7        &kp N8        &kp N9         &kp SLASH   &kp COLON   &kp BACKSPACE
+&trans  &trans      &trans  &trans  &trans  &trans  &kp NUMBER_4  &kp N5        &kp N6         &kp MINUS   &kp LS(N9)  &kp LS(N0)
+&trans  &trans      &trans  &trans  &trans  &trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3   &kp PLUS    &kp LS(LT)  &kp LS(GT)
+&trans  &bt BT_CLR  &trans  &trans  &trans  &to 0   &to 0         &kp N0        &kp BACKSPACE  &kp PERIOD  &kp ENTER
+                                                    &trans        &trans        &trans         &trans      &trans
             >;
 
             label = "numlock";

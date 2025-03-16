@@ -137,6 +137,35 @@
             label = "MV_D";
         };
         
+        // COSMIC Navigation Macros (Super+Direction)
+        nav_l: nav_l {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp LEFT>;
+            label = "NAV_L";
+        };
+        
+        nav_r: nav_r {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp RIGHT>;
+            label = "NAV_R";
+        };
+        
+        nav_u: nav_u {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp UP>;
+            label = "NAV_U";
+        };
+        
+        nav_d: nav_d {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp DOWN>;
+            label = "NAV_D";
+        };
+        
         // IT Tools
         services_msc: services_msc {
             compatible = "zmk,behavior-macro";
@@ -206,7 +235,7 @@
                                                               &kp ENTER  &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
         lower_layer {
@@ -229,7 +258,7 @@
                                                                                         &none            &kp END          &kp PG_UP        &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
         raise_layer {
@@ -251,7 +280,7 @@
                                                                                   &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_PP  &kp C_PREVIOUS  &kp C_STOP
             >;
 
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
         nav_layer {
@@ -266,14 +295,14 @@
 
             bindings = <
 &trans      &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
-&wn_task    &trans      &trans  &cs_max    &trans     &cs_float  &trans   &trans  &trans  &trans  &trans  &trans
-&trans      &trans      &trans  &trans     &cs_full   &trans     &trans   &trans  &trans  &trans  &trans  &trans
-&trans      &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
-&trans      &trans      &trans  &ctrlAltDel &trans    &trans     &trans   &trans  &trans  &trans  &trans
+&wn_task    &nav_l      &nav_u  &nav_d     &nav_r     &cs_float  &trans   &mv_l   &mv_u   &mv_d   &mv_r   &trans
+&trans      &trans      &trans  &cs_max    &cs_full   &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&ctrlAltDel &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&trans      &trans      &trans  &trans     &trans    &trans     &trans   &trans  &trans  &trans  &trans
                                                                  &trans   &mv_r   &mv_u   &mv_l   &mv_d
             >;
             
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
         work_layer {
@@ -287,15 +316,15 @@
             //               |     |      |      |      |                |      |      |       |      |
 
             bindings = <
+&services_msc &wkup  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
 &trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
-&trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
-&trans      &trans  &trans        &trans     &ctrlAltPause &trans   &trans   &good_morning   &good_afternoon  &thank_you      &closing_case   &following_up
+&trans      &trans  &trans        &trans     &ctrlAltPause &ctrlAltEnd   &trans   &good_morning   &good_afternoon  &thank_you      &closing_case   &following_up
 &trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
 &trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans
                                                                  &trans   &trans          &trans           &trans          &trans
             >;
             
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
 
         system_layer {
@@ -317,7 +346,7 @@
                                                     &trans  &trans   &trans   &trans           &trans
             >;
             
-            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp C_AC_SCROLL_DOWN C_AC_SCROLL_UP &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };

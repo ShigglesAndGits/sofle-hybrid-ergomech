@@ -14,6 +14,8 @@
 #define NAV 3
 #define WORK 4
 #define SYSTEM 5
+#define RESIZE_LAYER 6
+#define RESIZE_SHIFT 7
 
 / {
     // Activate SYSTEM layer by pressing nav and work layers together
@@ -24,6 +26,11 @@
         system_layer {
             if-layers = <3 4>;
             then-layer = <5>;
+        };
+        
+        resize_shift_layer {
+            if-layers = <6 1>;  // RESIZE_LAYER and LOWER (using LOWER as shift indicator)
+            then-layer = <7>;   // RESIZE_SHIFT layer
         };
     };
 
@@ -41,9 +48,33 @@
             tapping-term-ms = <200>;
             bindings = <&mo RAISE>, <&mo WORK>;
         };
-    };
+        
+        // Special encoder behaviors for resize functionality
+        resize_encoder_lr: behavior_sensor_rotate_key_press {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LEFT>, <&kp RIGHT>;
+        };
+        
+        resize_encoder_ud: behavior_sensor_rotate_key_press {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp DOWN>, <&kp UP>;
+        };
+        
+        // Special encoder behaviors for resize functionality
+        resize_encoder_lr: behavior_sensor_rotate_key_press {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LEFT>, <&kp RIGHT>;
+        };
+        
+        resize_encoder_ud: behavior_sensor_rotate_key_press {
+            compatible = "zmk,behavior-sensor-rotate-key-press";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp DOWN>, <&kp UP>;
+        };
 
-    macros {
         wkup: wkup {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -367,6 +398,19 @@
 
             label = "FOLLOWING_UP";
         };
+
+        cs_resize: cs_resize {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = 
+                <&macro_press>,
+                <&mo RESIZE_LAYER &kp LGUI &kp R>,
+                <&macro_pause_for_release>,
+                <&macro_release>,
+                <&mo RESIZE_LAYER &kp LGUI &kp R>;
+
+            label = "CS_RESIZE";
+        };
     };
 
     keymap {
@@ -451,7 +495,7 @@
 
             bindings = <
 &trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&cs_close    &trans  &nav_u  &trans  &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
+&cs_close    &trans  &nav_u  &cs_resize  &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &nav_l  &nav_d  &nav_r  &cs_max    &cs_wk     &trans  &trans  &trans  &trans  &trans  &trans
 &ctrlAltDel  &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans
@@ -503,6 +547,72 @@
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+        };
+
+        resize_shift_layer {
+            label = "resize_shift";
+
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
+            bindings = <
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans
+                                                           &trans  &trans  &trans  &trans  &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+        };
+
+        resize_layer {
+            label = "resize";
+
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
+            bindings = <
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans
+                                                           &trans  &trans  &trans  &trans  &trans
+            >;
+
+            sensor-bindings = <&resize_encoder_lr>;
+        };
+
+        resize_shift_layer {
+            label = "resize_shift";
+
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
+            bindings = <
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans
+                                                           &trans  &trans  &trans  &trans  &trans
+            >;
+
+            sensor-bindings = <&resize_encoder_ud>;
         };
     };
 };

@@ -580,8 +580,8 @@
             sensor-bindings = <&resize_encoder_lr>;
         };
 
-        resize_shift_layer_vertical {
-            label = "resize_shift_vertical";
+        resize_shift_layer_horizontal {
+            label = "resize_shift_horizontal";
 
             // ------------------------------------------------------------------------------------------------------------
             // |       |     |     |      |      |      |                |      |      |       |      |       |       |

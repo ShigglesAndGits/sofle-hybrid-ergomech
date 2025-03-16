@@ -152,6 +152,32 @@
             label = "CS_FULL";
         };
 
+        cs_close: cs_close {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp Q>,
+                <&macro_release>,
+                <&kp LGUI>;
+            label = "CS_CLOSE";
+        };
+
+        cs_wk: cs_wk {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp W>,
+                <&macro_release>,
+                <&kp LGUI>;
+            label = "CS_WK";
+        };
+
         // Window Movement Macros (COSMIC)
 
         mv_l: mv_l {

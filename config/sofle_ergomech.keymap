@@ -60,21 +60,39 @@
         ctrlAltDel: ctrlAltDel {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LCTRL &kp LEFT_ALT &kp DEL>;
+            bindings = 
+                <&macro_press>,
+                <&kp LCTRL &kp LEFT_ALT>,
+                <&macro_tap>,
+                <&kp DEL>,
+                <&macro_release>,
+                <&kp LCTRL &kp LEFT_ALT>;
             label = "CTRLALTDEL";
         };
 
         ctrlAltPause: ctrlAltPause {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LCTRL &kp LALT &kp PAUSE_BREAK>;
+            bindings = 
+                <&macro_press>,
+                <&kp LCTRL &kp LALT>,
+                <&macro_tap>,
+                <&kp PAUSE_BREAK>,
+                <&macro_release>,
+                <&kp LCTRL &kp LALT>;
             label = "CTRLALTPAUSE";
         };
 
         ctrlAltEnd: ctrlAltEnd {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LCTRL &kp LALT &kp END>;
+            bindings = 
+                <&macro_press>,
+                <&kp LCTRL &kp LALT>,
+                <&macro_tap>,
+                <&kp END>,
+                <&macro_release>,
+                <&kp LCTRL &kp LALT>;
             label = "CTRLALTEND";
         };
 
@@ -83,7 +101,13 @@
         wn_task: wn_task {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LCTRL &kp LSHFT &kp ESC>;
+            bindings = 
+                <&macro_press>,
+                <&kp LCTRL &kp LSHFT>,
+                <&macro_tap>,
+                <&kp ESC>,
+                <&macro_release>,
+                <&kp LCTRL &kp LSHFT>;
             label = "WN_TASK";
         };
 
@@ -92,21 +116,39 @@
         cs_float: cs_float {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp G>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp G>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "CS_FLOAT";
         };
 
         cs_max: cs_max {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp M>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp M>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "CS_MAX";
         };
 
         cs_full: cs_full {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp F>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp F>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "CS_FULL";
         };
 
@@ -115,28 +157,52 @@
         mv_l: mv_l {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp LSHFT &kp LEFT>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI &kp LSHFT>,
+                <&macro_tap>,
+                <&kp LEFT>,
+                <&macro_release>,
+                <&kp LGUI &kp LSHFT>;
             label = "MV_L";
         };
 
         mv_r: mv_r {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp LSHFT &kp RIGHT>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI &kp LSHFT>,
+                <&macro_tap>,
+                <&kp RIGHT>,
+                <&macro_release>,
+                <&kp LGUI &kp LSHFT>;
             label = "MV_R";
         };
 
         mv_u: mv_u {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp LSHFT &kp UP>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI &kp LSHFT>,
+                <&macro_tap>,
+                <&kp UP>,
+                <&macro_release>,
+                <&kp LGUI &kp LSHFT>;
             label = "MV_U";
         };
 
         mv_d: mv_d {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp LSHFT &kp DOWN>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI &kp LSHFT>,
+                <&macro_tap>,
+                <&kp DOWN>,
+                <&macro_release>,
+                <&kp LGUI &kp LSHFT>;
             label = "MV_D";
         };
 
@@ -145,28 +211,52 @@
         nav_l: nav_l {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp LEFT>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp LEFT>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "NAV_L";
         };
 
         nav_r: nav_r {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp RIGHT>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp RIGHT>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "NAV_R";
         };
 
         nav_u: nav_u {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp UP>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp UP>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "NAV_U";
         };
 
         nav_d: nav_d {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LGUI &kp DOWN>;
+            bindings = 
+                <&macro_press>,
+                <&kp LGUI>,
+                <&macro_tap>,
+                <&kp DOWN>,
+                <&macro_release>,
+                <&kp LGUI>;
             label = "NAV_D";
         };
 

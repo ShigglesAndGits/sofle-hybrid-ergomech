@@ -28,7 +28,7 @@
             then-layer = <5>;
         };
         
-        resize_shift_layer {
+        resize_shift_condition {
             if-layers = <6 1>;  // RESIZE_LAYER and LOWER (using LOWER as shift indicator)
             then-layer = <7>;   // RESIZE_SHIFT layer
         };
@@ -50,26 +50,13 @@
         };
         
         // Special encoder behaviors for resize functionality
-        resize_encoder_lr: behavior_sensor_rotate_key_press {
+        resize_encoder_lr: resize_encoder_horizontal {
             compatible = "zmk,behavior-sensor-rotate-key-press";
             #sensor-binding-cells = <0>;
             bindings = <&kp LEFT>, <&kp RIGHT>;
         };
         
-        resize_encoder_ud: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp DOWN>, <&kp UP>;
-        };
-        
-        // Special encoder behaviors for resize functionality
-        resize_encoder_lr: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp LEFT>, <&kp RIGHT>;
-        };
-        
-        resize_encoder_ud: behavior_sensor_rotate_key_press {
+        resize_encoder_ud: resize_encoder_vertical {
             compatible = "zmk,behavior-sensor-rotate-key-press";
             #sensor-binding-cells = <0>;
             bindings = <&kp DOWN>, <&kp UP>;
@@ -549,8 +536,8 @@
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
-        resize_shift_layer {
-            label = "resize_shift";
+        resize_shift_layer_vertical {
+            label = "resize_shift_vertical";
 
             // ------------------------------------------------------------------------------------------------------------
             // |       |     |     |      |      |      |                |      |      |       |      |       |       |
@@ -593,8 +580,8 @@
             sensor-bindings = <&resize_encoder_lr>;
         };
 
-        resize_shift_layer {
-            label = "resize_shift";
+        resize_shift_layer_vertical {
+            label = "resize_shift_vertical";
 
             // ------------------------------------------------------------------------------------------------------------
             // |       |     |     |      |      |      |                |      |      |       |      |       |       |

@@ -295,9 +295,9 @@
 
             bindings = <
 &trans      &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
-&wn_task    &nav_l      &nav_u  &nav_d     &nav_r     &cs_float  &trans   &mv_l   &mv_u   &mv_d   &mv_r   &trans
-&trans      &trans      &trans  &cs_max    &cs_full   &trans     &trans   &trans  &trans  &trans  &trans  &trans
-&ctrlAltDel &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&wn_task    &trans      &trans  &trans     &trans     &cs_float  &trans   &trans  &trans  &trans  &trans  &trans
+&trans      &nav_l      &nav_u  &nav_d     &nav_r     &trans     &trans   &trans  &mv_u   &trans  &mv_l   &mv_r
+&ctrlAltDel &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &mv_d   &trans  &trans
 &trans      &trans      &trans  &trans     &trans    &trans     &trans   &trans  &trans  &trans  &trans
                                                                  &trans   &mv_r   &mv_u   &mv_l   &mv_d
             >;

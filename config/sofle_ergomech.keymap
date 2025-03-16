@@ -11,17 +11,35 @@
 #define BASE 0
 #define LOWER 1
 #define RAISE 2
-#define ADJUST 3
+#define NAV 3
+#define WORK 4
+#define SYSTEM 5
 
 / {
-    // Activate ADJUST layer by pressing raise and lower
+    // Activate SYSTEM layer by pressing nav and work layers together
 
     conditional_layers {
         compatible = "zmk,conditional-layers";
 
-        adjust_layer {
-            if-layers = <1 2>;
-            then-layer = <3>;
+        system_layer {
+            if-layers = <3 4>;
+            then-layer = <5>;
+        };
+    };
+    
+    behaviors {
+        td_layer_nav: tap_dance_layer_nav {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&mo LOWER>, <&mo NAV>;
+        };
+        
+        td_layer_work: tap_dance_layer_work {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&mo RAISE>, <&mo WORK>;
         };
     };
 
@@ -59,6 +77,111 @@
             bindings = <&kp LCTRL &kp LALT &kp END>;
             label = "CTRLALTEND";
         };
+        
+        // Windows System Management
+        wn_task: wn_task {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LCTRL &kp LSHFT &kp ESC>;
+            label = "WN_TASK";
+        };
+        
+        // COSMIC Window Management
+        cs_float: cs_float {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp G>;
+            label = "CS_FLOAT";
+        };
+        
+        cs_max: cs_max {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp M>;
+            label = "CS_MAX";
+        };
+        
+        cs_full: cs_full {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp F>;
+            label = "CS_FULL";
+        };
+        
+        // Window Movement Macros (COSMIC)
+        mv_l: mv_l {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp LSHFT &kp LEFT>;
+            label = "MV_L";
+        };
+        
+        mv_r: mv_r {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp LSHFT &kp RIGHT>;
+            label = "MV_R";
+        };
+        
+        mv_u: mv_u {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp LSHFT &kp UP>;
+            label = "MV_U";
+        };
+        
+        mv_d: mv_d {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp LSHFT &kp DOWN>;
+            label = "MV_D";
+        };
+        
+        // IT Tools
+        services_msc: services_msc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI &kp R &macro_wait_time 100 &kp S &kp E &kp R &kp V &kp I &kp C &kp E &kp S &kp DOT &kp M &kp S &kp C &kp ENTER>;
+            label = "SERVICES_MSC";
+        };
+        
+        // Text Snippets
+        good_morning: good_morning {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp G &kp O &kp O &kp D &kp SPACE &kp M &kp O &kp R &kp N &kp I &kp N &kp G &kp COMMA &kp SPACE>;
+            label = "GOOD_MORNING";
+        };
+        
+        good_afternoon: good_afternoon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp G &kp O &kp O &kp D &kp SPACE &kp A &kp F &kp T &kp E &kp R &kp N &kp O &kp O &kp N &kp COMMA &kp SPACE>;
+            label = "GOOD_AFTERNOON";
+        };
+        
+        thank_you: thank_you {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp T &kp H &kp A &kp N &kp K &kp SPACE &kp Y &kp O &kp U &kp SPACE &kp F &kp O &kp R &kp SPACE &kp Y &kp O &kp U &kp R &kp SPACE 
+                        &kp T &kp I &kp M &kp E &kp SPACE &kp I &kp N &kp SPACE &kp T &kp R &kp O &kp U &kp B &kp L &kp E &kp S &kp H &kp O &kp O &kp T &kp I &kp N &kp G &kp SPACE 
+                        &kp T &kp H &kp I &kp S &kp SPACE &kp T &kp I &kp C &kp K &kp E &kp T &kp DOT>;
+            label = "THANK_YOU";
+        };
+        
+        closing_case: closing_case {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp A &kp S &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp S &kp H &kp O &kp U &kp L &kp D &kp SPACE &kp R &kp E &kp S &kp O &kp L &kp V &kp E &kp SPACE &kp T &kp H &kp E &kp SPACE &kp I &kp S &kp S &kp U &kp E &kp COMMA &kp SPACE &kp I &kp SPACE &kp W &kp I &kp L &kp L &kp SPACE &kp C &kp L &kp O &kp S &kp E &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp C &kp A &kp S &kp E &kp DOT &kp SPACE &kp P &kp L &kp E &kp A &kp S &kp E &kp SPACE &kp D &kp O &kp SPACE &kp N &kp O &kp T &kp SPACE &kp H &kp E &kp S &kp I &kp T &kp A &kp T &kp E &kp SPACE &kp T &kp O &kp SPACE &kp R &kp E &kp A &kp C &kp H &kp SPACE &kp O &kp U &kp T &kp SPACE &kp B &kp Y &kp SPACE &kp P &kp H &kp O &kp N &kp E &kp SPACE &kp O &kp R &kp SPACE &kp B &kp Y &kp SPACE &kp R &kp E &kp S &kp P &kp O &kp N &kp D &kp I &kp N &kp G &kp SPACE &kp T &kp O &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp E &kp M &kp A &kp I &kp L &kp SPACE &kp T &kp O &kp SPACE &kp R &kp E &kp MINUS &kp O &kp P &kp E &kp N &kp SPACE &kp T &kp H &kp E &kp SPACE &kp T &kp I &kp C &kp K &kp E &kp T &kp DOT &kp SPACE &kp T &kp H &kp A &kp N &kp K &kp SPACE &kp Y &kp O &kp U &kp DOT>;
+            label = "CLOSING_CASE";
+        };
+        
+        following_up: following_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp A &kp R &kp E &kp SPACE &kp T &kp H &kp E &kp R &kp E &kp SPACE &kp A &kp N &kp Y &kp SPACE &kp U &kp P &kp D &kp A &kp T &kp E &kp S &kp SPACE &kp O &kp N &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp I &kp S &kp S &kp U &kp E &kp QUESTION>;
+            label = "FOLLOWING_UP";
+        };
     };
 
     keymap {
@@ -79,11 +202,11 @@
 &kp ESC     &kp Q     &kp W     &kp E      &kp R      &kp T   &kp Y      &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D      &kp F      &kp G   &kp H      &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C      &kp V      &kp B   &kp N      &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&kp C_MUTE  &kp LALT  &kp LGUI  &kp LCTRL  &kp SPACE  &mo 1   &mo 2      &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
+&kp C_MUTE  &kp LALT  &kp LGUI  &kp LCTRL  &kp SPACE  &td_layer_nav   &td_layer_work      &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
                                                               &kp ENTER  &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
         lower_layer {
@@ -106,7 +229,7 @@
                                                                                         &none            &kp END          &kp PG_UP        &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
         raise_layer {
@@ -128,46 +251,73 @@
                                                                                   &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_PP  &kp C_PREVIOUS  &kp C_STOP
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        num_layer {
+        nav_layer {
+            label = "nav";
+            
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
             bindings = <
-&trans      &trans      &trans  &trans  &trans  &trans  &none         &none         &none          &none       &none       &none
-&trans      &trans      &trans  &trans  &trans  &trans  &kp N7        &kp N8        &kp N9         &kp SLASH   &kp COLON   &kp BACKSPACE
-&trans      &trans      &trans  &trans  &trans  &trans  &kp NUMBER_4  &kp N5        &kp N6         &kp MINUS   &kp LS(N9)  &kp LS(N0)
-&bt BT_CLR  &trans      &trans  &trans  &trans  &trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3   &kp PLUS    &kp LS(LT)  &kp LS(GT)
-&trans      &bt BT_CLR  &trans  &trans  &trans  &to 0   &to 0         &kp N0        &kp BACKSPACE  &kp PERIOD  &kp ENTER
-                                                        &trans        &trans        &trans         &trans      &trans
+&trans      &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&wn_task    &trans      &trans  &cs_max    &trans     &cs_float  &trans   &trans  &trans  &trans  &trans  &trans
+&trans      &trans      &trans  &trans     &cs_full   &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&trans      &trans      &trans  &trans     &trans     &trans     &trans   &trans  &trans  &trans  &trans  &trans
+&trans      &trans      &trans  &ctrlAltDel &trans    &trans     &trans   &trans  &trans  &trans  &trans
+                                                                 &trans   &mv_r   &mv_u   &mv_l   &mv_d
             >;
-
-            label = "numlock";
+            
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        game {
+        work_layer {
+            label = "work";
+            
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
             bindings = <
-&trans      &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &to 0
-&trans      &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&kp CAPS    &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&kp LSHIFT  &trans  &trans        &trans     &trans  &trans   &trans   &trans  &trans  &trans  &trans  &trans
-&trans      &kp M   &kp LEFT_ALT  &kp LCTRL  &trans  &kp TAB  &kp ESC  &trans  &trans  &trans  &trans
-                                                              &trans   &trans  &trans  &trans  &trans
+&trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
+&trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
+&trans      &trans  &trans        &trans     &ctrlAltPause &trans   &trans   &good_morning   &good_afternoon  &thank_you      &closing_case   &following_up
+&trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans          &trans
+&trans      &trans  &trans        &trans     &trans     &trans   &trans   &trans          &trans           &trans          &trans
+                                                                 &trans   &trans          &trans           &trans          &trans
             >;
-
-            label = "game";
+            
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
 
-        system {
+        system_layer {
+            label = "system";
+            
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
+            //               |     |      |      |      |                |      |      |       |      |
+
             bindings = <
 &kp F1      &kp F2  &kp F3  &kp F4  &kp F5  &kp F6  &kp F7  &kp F8   &kp F9   &kp F10          &kp F11  &kp F12
-&trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans   &trans           &trans   &trans
-&bt BT_CLR  &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans   &trans           &trans   &trans
+&trans      &trans  &trans  &trans  &trans  &trans  &bt BT_CLR &trans   &trans   &trans           &trans   &trans
+&trans      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &trans  &trans   &trans   &trans           &trans   &trans
 &trans      &trans  &trans  &trans  &trans  &trans  &trans  &kp DEL  &kp END  &kp PAUSE_BREAK  &kp ESC  &trans
 &trans      &trans  &trans  &trans  &trans  &trans  &trans  &trans   &trans   &trans           &trans
                                                     &trans  &trans   &trans   &trans           &trans
             >;
-
-            label = "System";
+            
+            sensor-bindings = <&inc_dec_kp UP DOWN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };

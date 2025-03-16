@@ -398,6 +398,22 @@
 
             label = "CS_RESIZE";
         };
+
+        ctrl_tap_hold_resize: ctrl_tap_hold_resize {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = 
+                <&macro_tap>,
+                <&kp LCTRL>,
+                <&macro_wait_time 200>,
+                <&macro_press>,
+                <&mo RESIZE_LAYER &kp LGUI &kp R>,
+                <&macro_pause_for_release>,
+                <&macro_release>,
+                <&mo RESIZE_LAYER &kp LGUI &kp R>;
+
+            label = "CTRL_TAP_HOLD_RESIZE";
+        };
     };
 
     keymap {
@@ -418,7 +434,7 @@
 &kp ESC     &kp Q     &kp W     &kp E      &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D      &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C      &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&kp C_MUTE  &kp LALT  &kp LGUI  &kp LCTRL  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
+&kp LSHIFT  &kp LALT  &kp LGUI  &ctrl_tap_hold_resize  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
                                                                      &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 

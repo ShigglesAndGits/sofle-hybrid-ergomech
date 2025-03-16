@@ -14,10 +14,6 @@
 #define NAV 3
 #define WORK 4
 #define SYSTEM 5
-#define META_R_LAYER 6
-#define META_R_SHIFT 7
-#define VSHIFT 8
-#define MOUSE 9
 
 / {
     // Activate SYSTEM layer by pressing nav and work layers together
@@ -28,11 +24,6 @@
         system_layer {
             if-layers = <3 4>;
             then-layer = <5>;
-        };
-        
-        meta_r_shift_layer {
-            if-layers = <6 8>; // META_R_LAYER and virtual SHIFT layer
-            then-layer = <7>; // META_R_SHIFT layer
         };
     };
 
@@ -49,43 +40,6 @@
             #binding-cells = <0>;
             tapping-term-ms = <200>;
             bindings = <&mo RAISE>, <&mo WORK>;
-        };
-        
-        // Special encoder behavior for Meta+R with shift detection
-        meta_r_encoder: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp LEFT>, <&kp RIGHT>;
-        };
-        
-        meta_r_shift_encoder: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp DOWN>, <&kp UP>;
-        };
-        
-        // Mouse movement encoders
-        mouse_encoder_x: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&mmv MOVE_LEFT>, <&mmv MOVE_RIGHT>;
-        };
-        
-        mouse_encoder_y: behavior_sensor_rotate_key_press {
-            compatible = "zmk,behavior-sensor-rotate-key-press";
-            #sensor-binding-cells = <0>;
-            bindings = <&mmv MOVE_DOWN>, <&mmv MOVE_UP>;
-        };
-        
-        // Shift key that also activates the virtual shift layer
-        shift_with_layer: behavior_hold_tap {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
-            global-quick-tap;
-            bindings = <&mo>, <&kp>;
         };
     };
 
@@ -231,34 +185,6 @@
                 <&kp LGUI>;
 
             label = "CS_WK";
-        };
-
-        meta_r: meta_r {
-            compatible = "zmk,behavior-macro-two-param";
-            wait-ms = <0>;
-            tap-ms = <0>;
-            #binding-cells = <0>;
-            bindings = 
-                <&macro_press>,
-                <&mo META_R_LAYER &kp LGUI &kp R>,
-                <&macro_pause_for_release>,
-                <&macro_release>,
-                <&mo META_R_LAYER &kp LGUI &kp R>;
-
-            label = "META_R";
-        };
-        
-        mouse_mode: mouse_mode {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = 
-                <&macro_press>,
-                <&mo MOUSE>,
-                <&macro_pause_for_release>,
-                <&macro_release>,
-                <&mo MOUSE>;
-
-            label = "MOUSE_MODE";
         };
 
         // Window Movement Macros (COSMIC)
@@ -503,7 +429,7 @@
 
             bindings = <
 &kp F1      &kp F2        &kp F3        &kp F4        &kp F5        &kp F6        &kp F7            &kp F8      &kp F9    &kp F10         &kp F11        &kp F12
-&kp K_APP   &none         &none         &mouse_mode   &trans        &none         &kp PG_UP         &trans      &kp UP    &trans          &kp BACKSLASH  &kp DEL
+&kp K_APP   &none         &none         &none         &trans        &none         &kp PG_UP         &trans      &kp UP    &trans          &kp BACKSLASH  &kp DEL
 &kp K_REDO  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp PG_DN         &kp LEFT    &kp DOWN  &kp RIGHT       &kp EQUAL      &none
 &kp K_UNDO  &kp K_CUT     &kp K_COPY    &kp K_PASTE   &kp CAPS      &none         &trans            &trans      &trans    &trans          &kp BACKSLASH  &kp RIGHT_SHIFT
 &trans      &trans        &trans        &trans        &trans        &trans        &trans            &trans      &trans    &trans          &trans
@@ -525,7 +451,7 @@
 
             bindings = <
 &trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&cs_close    &trans  &nav_u  &meta_r  &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
+&cs_close    &trans  &nav_u  &trans  &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &nav_l  &nav_d  &nav_r  &cs_max    &cs_wk     &trans  &trans  &trans  &trans  &trans  &trans
 &ctrlAltDel  &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &trans  &trans  &trans  &trans     &trans     &trans  &trans  &trans  &trans  &trans
@@ -577,72 +503,6 @@
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
-        };
-
-        meta_r_layer {
-            label = "meta_r";
-
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans
-                                                              &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&meta_r_encoder>;
-        };
-
-        meta_r_shift_layer {
-            label = "meta_r_shift";
-
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans
-                                                              &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&meta_r_shift_encoder>;
-        };
-        
-        vshift_layer {
-            label = "vshift";
-            
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans  &trans  &trans  &trans
-                                                              &trans  &trans  &trans  &trans  &trans
-            >;
-            
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
-        };
-        
-        mouse_layer {
-            label = "mouse";
-            
-            // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     | SPD-|  SPD+|      |      |                | SCRL↑| MV↑  | SCRL↑ |      |       |       |
-            // |       |     |     |      |      |      |                | SCRL←| MV↓  | SCRL→ |      |       |       |
-            // |       |     |     |      |      |      |                | SCRL↓| MCLK | SCRL↓ |      |       |       |
-            //               |     |      |      |      |                | LCLK | RCLK |       |      |
-            
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans                &trans  &trans      &trans      &trans      &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &mwh SCROLL_UP    &mmv MOVE_UP    &mwh SCROLL_UP    &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &mwh SCROLL_LEFT  &mmv MOVE_DOWN  &mwh SCROLL_RIGHT  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &mwh SCROLL_DOWN  &mkp MCLK       &mwh SCROLL_DOWN  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                &mkp LCLK  &mkp RCLK  &trans  &trans  &trans
-            >;
-            
-            sensor-bindings = <&mouse_encoder_x>;
         };
     };
 };

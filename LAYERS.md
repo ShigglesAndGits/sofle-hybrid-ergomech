@@ -21,17 +21,31 @@ The base layer follows a standard QWERTY layout with ergonomic optimizations:
                       └─────┴─────┴─────┘                  └─────┴─────┴─────┘
 ```
 
-
 ### Thumb Cluster
 
 - Left: GUI, ALT, CTRL
 - Right: NAV (tap dance), WORK (tap dance), CTRL
-- Encoders: Volume control by default
 
+### Encoders
+
+- Default Layer: Volume control
+- NAV Layer: Workspace switching (Super+Tab / Super+Shift+Tab)
+- WORK Layer: Application switching (Alt+Tab / Alt+Shift+Tab)
+- Resize Layer: Window size adjustment
+
+### Display Features
+
+- OLED display enabled only on left shield
+- Battery percentage indicator
+- WPM (Words Per Minute) counter
+- Layer status display
+- Output status indicator
+- 10-second timeout when idle
+- 1-second refresh rate
 
 ## Navigation Layer (3)
 
-Activated by double-tapping the NAV key. Focuses on text navigation and editing:
+Activated by double-tapping the NAV key. Focuses on text navigation and editing. Features workspace switching via encoder:
 
 - Vim-style navigation:
   - H: Left
@@ -46,7 +60,7 @@ Activated by double-tapping the NAV key. Focuses on text navigation and editing:
 
 ## Work Layer (4)
 
-Activated by double-tapping the WORK key. Focused on window and workspace management:
+Activated by double-tapping the WORK key. Focused on window and workspace management. Features application switching via encoder:
 
 - COSMIC window controls:
   - Float (Super + G)
@@ -95,6 +109,7 @@ Advanced window management features activated by combining RESIZE and LOWER:
 ## Special Features
 
 ### Tap Dance Behaviors
+
 - NAV key:
   - Single tap: LOWER layer
   - Double tap: Navigation layer
@@ -111,4 +126,3 @@ Advanced window management features activated by combining RESIZE and LOWER:
 2. Resize Shift Activation:
    - Triggered by: RESIZE + LOWER
    - Enables advanced window management
-

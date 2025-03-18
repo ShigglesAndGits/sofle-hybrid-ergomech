@@ -517,7 +517,7 @@
 
             bindings = <
 &services_msc  &wkup   &trans  &trans  &trans         &trans       &trans  &trans         &trans           &trans      &trans         &trans
-&trans         &trans  &trans  &trans  &trans         &trans       &trans  &trans         &trans           &trans      &trans         &trans
+&trans         &trans  &trans  &trans  &trans         &trans       &trans  &trans         &trans           &trans      &kp KP_NUM    &trans
 &trans         &trans  &trans  &trans  &ctrlAltPause  &ctrlAltEnd  &trans  &good_morning  &good_afternoon  &thank_you  &closing_case  &following_up
 &trans         &trans  &trans  &trans  &trans         &trans       &trans  &trans         &trans           &trans      &trans         &trans
 &trans         &trans  &trans  &trans  &trans         &trans       &trans  &trans         &trans           &trans      &trans

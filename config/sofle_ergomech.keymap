@@ -523,7 +523,7 @@
                                                                                      &none            &kp END          &kp PG_UP        &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
         };
 
         raise_layer {

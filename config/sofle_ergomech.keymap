@@ -16,7 +16,7 @@
 #define SYSTEM 5
 #define RESIZE_LAYER 6
 #define RESIZE_SHIFT 7
-#define ENCODER_DIR 8
+#define ENCODER_DIR 10
 
 / {
     // Activate SYSTEM layer by pressing nav and work layers together
@@ -469,21 +469,6 @@
     keymap {
         compatible = "zmk,keymap";
 
-        encoder_dir_layer {
-            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
-            label = "encoder_dir";
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
-        };
-
         default_layer {
             label = "default";
 
@@ -681,6 +666,20 @@
             >;
 
             sensor-bindings = <&resize_encoder_ud>;
+        };
+
+        encoder_dir_layer {
+            label = "encoder_dir";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                                                &trans  &trans  &trans  &trans  &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
         };
     };
 };

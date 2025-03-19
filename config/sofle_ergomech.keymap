@@ -74,6 +74,7 @@
         };
 
         // App switching encoder behaviors
+
         app_switch_encoder: app_switch_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
@@ -87,10 +88,11 @@
         };
 
         // Screenshot macro
+
         meta_shift_s: meta_shift_s {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = 
+            bindings =
                 <&macro_press>,
                 <&kp LGUI &kp LSHFT>,
                 <&macro_tap>,
@@ -102,10 +104,11 @@
         };
 
         // Windows terminal launcher
+
         launch_terminal: launch_terminal {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = 
+            bindings =
                 <&macro_press>,
                 <&kp LGUI>,
                 <&macro_tap>,
@@ -480,12 +483,12 @@
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
             bindings = <
-&kp GRAVE   &kp N1    &kp N2    &kp N3           &kp N4     &kp N5         &kp N6          &kp N7     &kp N8        &kp N9    &kp N0    &kp MINUS
-&kp ESC     &kp Q     &kp W     &kp E            &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
-&kp TAB     &kp A     &kp S     &kp D            &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
+&kp GRAVE   &kp N1    &kp N2    &kp N3           &kp N4     &kp N5         &kp N6                        &kp N7     &kp N8        &kp N9    &kp N0    &kp MINUS
+&kp ESC     &kp Q     &kp W     &kp E            &kp R      &kp T          &kp Y                         &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
+&kp TAB     &kp A     &kp S     &kp D            &kp F      &kp G          &kp H                         &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C            &kp V      &kp B          &mute_mod ENCODER_DIR C_MUTE  &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&kp LSHIFT  &kp LALT  &kp LGUI  &td_ctrl_resize  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
-                                                                           &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
+&mo 9       &kp LALT  &kp LGUI  &td_ctrl_resize  &kp SPACE  &td_layer_nav  &td_layer_work                &kp ENTER  &kp RCTRL     &kp RGUI  &kp RALT
+                                                                           &kp ENTER                     &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
             sensor-bindings = <&inc_dec_kp UP DOWN>;

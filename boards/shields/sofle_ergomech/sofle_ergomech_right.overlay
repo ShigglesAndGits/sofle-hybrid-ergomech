@@ -28,9 +28,9 @@
 &pro_micro_i2c {
     status = "okay";
 
-    &trackball {
-        status = "okay";
-    };
+    // &trackball { // Temporarily comment out trackball enable
+    //     status = "okay";
+    // };
 };
 
 /* Left side encoder is defined in the left overlay */

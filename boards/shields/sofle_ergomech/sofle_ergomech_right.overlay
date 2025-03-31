@@ -21,7 +21,7 @@
         ;
 };
 
-// &right_encoder { status = "okay"; }; // Temporarily comment out
+// &right_encoder { status = "okay"; }; // Keep commented out - no right encoder
 
 &pro_micro_i2c {
     status = "okay";
@@ -32,4 +32,4 @@
 };
 
 /* Left side encoder is defined in the left overlay */
-// &left_encoder { status = "disabled"; } // Temporarily comment out
+&left_encoder { status = "disabled"; } // Re-enable necessary disable for left encoder

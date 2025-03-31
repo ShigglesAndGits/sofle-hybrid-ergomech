@@ -71,12 +71,12 @@
          triggers-per-rotation = <20>;
      };
  
-     led_strip: led_strip {
-         compatible = "worldsemi,ws2812-strip";
-         chain-length = <1>; /* Number of LEDs */
-         color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
-         // spi-dev = <&pro_micro_spi>;
-     };
+ //    led_strip: led_strip { // COMMENT OUT START
+ //        compatible = "worldsemi,ws2812-strip";
+ //        chain-length = <1>; /* Number of LEDs */
+ //        color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
+ //        // spi-dev = <&pro_micro_spi>;
+ //    }; // COMMENT OUT END
  
      // Define the listener node for the PIM447 trackball
      pim447_listener: pim447_listener {

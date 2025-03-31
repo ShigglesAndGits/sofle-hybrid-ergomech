@@ -2,10 +2,16 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: pimoroni_trackball
+      url-base: https://github.com/t0bybr/
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+    - name: pim447
+      remote: pimoroni_trackball
+      revision: main
+      import: zephyr/module.yml
   self:
     path: config

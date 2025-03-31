@@ -24,3 +24,15 @@
 &right_encoder {
     status = "okay";
 };
+
+&pro_micro_i2c {
+    status = "okay";
+
+    trackball: pim447@0a {
+        compatible = "pimoroni,pim447";
+        reg = <0x0A>;
+        label = "PIM447";
+        status = "okay";
+        int-gpios = <&pro_micro 3 GPIO_ACTIVE_LOW>;
+    };
+};

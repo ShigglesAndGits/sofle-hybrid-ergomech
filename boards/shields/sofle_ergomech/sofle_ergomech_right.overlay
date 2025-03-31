@@ -28,7 +28,6 @@
 &pro_micro_i2c {
     status = "okay";
 
-    // Enable the trackball node defined in the shared dtsi
     &trackball {
         status = "okay";
     };

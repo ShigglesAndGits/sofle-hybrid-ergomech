@@ -28,11 +28,11 @@
 &pro_micro_i2c {
     status = "okay";
 
-    trackball: pim447@a {
-        compatible = "pimoroni,pim447";
-        reg = <0x0A>;
-        label = "PIM447";
+    // Enable the trackball node defined in the shared dtsi
+    &trackball {
         status = "okay";
-        int-gpios = <&pro_micro 3 GPIO_ACTIVE_LOW>;
     };
 };
+
+/* Left side encoder is defined in the left overlay */
+&left_encoder { status = "disabled"; };

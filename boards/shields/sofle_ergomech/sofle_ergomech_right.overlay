@@ -23,12 +23,18 @@
 
 // &right_encoder { status = "okay"; }; // Keep commented out - no right encoder
 
-// Modify the I2C node ONLY to enable the trackball child
-// DO NOT repeat 'status = "okay";' for the bus itself here.
-&pro_micro_i2c {
-    &trackball { // Enable nested trackball modification (defined in dtsi)
-        status = "okay";
-    };
+// Revert to root-level workaround structure
+// &pro_micro_i2c { // Keep commented out
+//     status = "okay";
+//     // Keep nested &trackball commented out
+//     // &trackball {
+//     //     status = "okay";
+//     // };
+// };
+
+// Enable trackball at root (diagnostic structure)
+&trackball {
+    status = "okay";
 };
 
 // Enable the input split driver

@@ -35,4 +35,4 @@
 };
 
 /* Left side encoder is defined in the left overlay */
-&left_encoder { status = "disabled"; };
+&left_encoder { status = "disabled"; }

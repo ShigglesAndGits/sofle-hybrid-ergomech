@@ -23,13 +23,18 @@
 
 // &right_encoder { status = "okay"; }; // Keep commented out - no right encoder
 
-// Restore correct nested structure for I2C and trackball enablement
-&pro_micro_i2c {
-    status = "okay";
+// Revert to root-level workaround structure
+// &pro_micro_i2c { // Keep commented out
+//     status = "okay";
+//     // Keep nested &trackball commented out
+//     // &trackball {
+//     //     status = "okay";
+//     // };
+// };
 
-    &trackball { // Enable nested trackball modification
-        status = "okay";
-    };
+// Enable trackball at root (diagnostic structure)
+&trackball {
+    status = "okay";
 };
 
 // Enable the input split driver

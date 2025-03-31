@@ -12,6 +12,5 @@ manifest:
     - name: pim447
       remote: pimoroni_trackball
       revision: main
-      import: zephyr/module.yml
   self:
     path: config

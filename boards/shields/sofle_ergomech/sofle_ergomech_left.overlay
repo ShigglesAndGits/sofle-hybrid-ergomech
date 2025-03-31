@@ -17,6 +17,13 @@
         ;
 };
 
+// Enable the PIM447 listener on the central (left) side and link it to the trackball device
+&pim447_listener {
+    status = "okay";
+    device = <&trackball>; // Reference the trackball node defined in the right overlay
+};
+
+/* Left side encoder */
 &left_encoder {
     status = "okay";
 };

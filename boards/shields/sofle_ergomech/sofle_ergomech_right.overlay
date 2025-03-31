@@ -23,13 +23,18 @@
 
 // &right_encoder { status = "okay"; }; // Keep commented out - no right encoder
 
-&pro_micro_i2c {
-    status = "okay";
-
-    &trackball { // Re-enable trackball
-        status = "okay";
-    };
+// Attempt enabling trackball at root level for syntax diagnosis
+&trackball { 
+    status = "okay"; 
 };
+
+// &pro_micro_i2c { // Comment out this whole block
+//     status = "okay";
+// 
+//     &trackball { // Re-enable trackball
+//         status = "okay";
+//     };
+// }; // End comment out
 
 /* Left side encoder is defined in the left overlay */
 // &left_encoder { status = "disabled"; } // Comment out again - build worked without it

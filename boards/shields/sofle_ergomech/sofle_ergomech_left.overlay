@@ -23,6 +23,11 @@
     device = <&trackball>; // Reference the trackball node defined in the right overlay
 };
 
+// Enable the input split driver
+&input_split {
+    status = "okay";
+};
+
 /* Left side encoder */
 &left_encoder {
     status = "okay";

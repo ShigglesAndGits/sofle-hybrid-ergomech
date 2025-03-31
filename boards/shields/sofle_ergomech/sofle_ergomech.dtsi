@@ -83,6 +83,12 @@
          compatible = "zmk,input-listener";
          status = "disabled"; // Disabled by default, enabled on central side
      };
+ 
+     // Input split driver needed for peripheral pointing devices
+     input_split: input_split {
+         compatible = "zmk,input-split-driver";
+         status = "disabled"; // Disabled by default, enabled in overlays
+     };
  };
  
  &pro_micro_i2c {

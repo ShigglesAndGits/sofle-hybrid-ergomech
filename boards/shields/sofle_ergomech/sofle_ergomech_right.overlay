@@ -23,18 +23,20 @@
 
 // &right_encoder { status = "okay"; }; // Keep commented out - no right encoder
 
-// Attempt enabling trackball at root level for syntax diagnosis
-&trackball { 
-    status = "okay"; 
-};
+// Ensure the I2C bus is enabled (might be redundant but safe)
+&pro_micro_i2c { // Uncomment this block
+    status = "okay";
 
-// &pro_micro_i2c { // Comment out this whole block
-//     status = "okay";
-// 
-//     &trackball { // Re-enable trackball
-//         status = "okay";
-//     };
-// }; // End comment out
+    // Keep the nested modification commented out as it failed parsing
+    // &trackball {
+    //     status = "okay";
+    // };
+}; // End uncomment
+
+// Enable the trackball node (defined in dtsi under pro_micro_i2c) directly at root
+&trackball {
+    status = "okay";
+};
 
 /* Left side encoder is defined in the left overlay */
 // &left_encoder { status = "disabled"; } // Comment out again - build worked without it

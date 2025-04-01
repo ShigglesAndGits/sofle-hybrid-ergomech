@@ -20,6 +20,7 @@
 // Enable the PIM447 listener on the central side
 &pim447_listener {
     status = "okay";
+    device = <&trackball>; // Point listener to the trackball device
 };
 
 // Enable the input split driver

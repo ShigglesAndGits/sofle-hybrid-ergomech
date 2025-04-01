@@ -25,8 +25,13 @@
 
 // Restore correct nested structure for I2C and trackball enablement
 &pro_micro_i2c {
+    /* Override I2C pins and explicitly reference the trackball node */
+    sda-pin = <29>; /* P0.29 */
+    scl-pin = <2>;  /* P0.02 */
+
     trackball: pim447@a {
         status = "okay";
+        int-gpios = <&pro_micro 31 GPIO_ACTIVE_LOW>; /* INT on P0.31 */
     };
 };
 

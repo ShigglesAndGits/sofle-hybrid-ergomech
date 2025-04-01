@@ -26,7 +26,8 @@
 // Restore correct nested structure for I2C and trackball enablement
 &pro_micro_i2c {
     // status = "okay"; // Don't repeat bus status
-    &trackball { // Enable nested trackball modification
+    &trackball {
+        // Enable nested trackball modification
         status = "okay";
     };
 };

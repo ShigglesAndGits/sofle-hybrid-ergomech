@@ -5,7 +5,6 @@
  */
 
 #include "sofle_ergomech.dtsi"
-#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
 
 &default_transform {
     col-offset = <6>;
@@ -26,25 +25,12 @@
 
 // Restore correct nested structure for I2C and trackball enablement
 &pro_micro_i2c {
-    /* Use pinctrl to override I2C pins */
-    pinctrl-0 = <&i2c0_custom>;
-    pinctrl-names = "default";
-
-    /* Explicitly reference the trackball node */
+    /* Explicitly reference the trackball node, rely on default pins from .dtsi */
     trackball: pim447@a {
         status = "okay";
-        int-gpios = <&pro_micro 31 GPIO_ACTIVE_LOW>; /* INT on P0.31 */
+        /* int-gpios will use default <&pro_micro 3> from .dtsi */
+        /* I2C pins (sda/scl) will use defaults from board/dtsi */
     };
-};
-
-/* Define custom pinctrl state for I2C0 */
-&pinctrl {
-	i2c0_custom: i2c0_custom {
-		group1 {
-			psels = <NRF_PSEL(TWIM_SDA, 0, 29)>, /* P0.29 */
-				    <NRF_PSEL(TWIM_SCL, 0, 2)>;  /* P0.02 */
-		};
-	};
 };
 
 // Enable the input split driver

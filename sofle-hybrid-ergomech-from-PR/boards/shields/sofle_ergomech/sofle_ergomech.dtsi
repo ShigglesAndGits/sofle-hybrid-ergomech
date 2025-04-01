@@ -99,7 +99,7 @@
          compatible = "pimoroni,pim447"; // Ensure this matches the driver
          reg = <0x0A>; // Standard I2C address for PIM447
          status = "disabled"; // Disabled here, enabled in right overlay
-         int-gpios = <&pro_micro 3 GPIO_ACTIVE_LOW>; // IMPORTANT: Verify this pin number matches your wiring! P3/D3 on nice!nano?
+         int-gpios = <&pro_micro 21 GPIO_ACTIVE_LOW>; // Updated pin to P0.31 (pro_micro pin 21)
      }; // UNCOMMENTED
  
      oled: ssd1306@3c {

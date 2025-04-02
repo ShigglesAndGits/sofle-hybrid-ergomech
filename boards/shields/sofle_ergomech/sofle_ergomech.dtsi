@@ -96,4 +96,11 @@
          inversion-on;
          prechargep = <0x22>;
      };
+
+    glidepoint: glidepoint@15 { // Use 0x15 as the address
+        compatible = "cirque,pinnacle_i2c";
+        reg = <0x15>;
+        status = "disabled"; // Disabled by default, enabled in overlay
+        interrupt-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; // Assuming active low interrupt
+    };
  };

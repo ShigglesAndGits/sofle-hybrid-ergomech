@@ -70,6 +70,12 @@
          sensors = <&left_encoder &right_encoder>;
          triggers-per-rotation = <20>;
      };
+
+    glidepoint_listener: glidepoint_listener {
+        compatible = "zmk,input-listener";
+        device = <&glidepoint>; // This will refer to the node in the overlay
+        status = "disabled";
+    };
  };
  
  &pro_micro_i2c {

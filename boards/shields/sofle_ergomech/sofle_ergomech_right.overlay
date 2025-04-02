@@ -24,3 +24,14 @@
 &right_encoder {
     status = "okay";
 };
+
+&i2c0 {
+    status = "okay";
+
+    glidepoint: glidepoint@15 { // Use 0x15 as the address
+        compatible = "cirque,pinnacle_i2c";
+        reg = <0x15>;
+        status = "okay";
+        interrupt-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; // Assuming active low interrupt
+    };
+};

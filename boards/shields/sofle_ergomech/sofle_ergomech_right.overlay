@@ -25,18 +25,9 @@
     status = "okay";
 };
 
-// Define split input mechanism
-/ {
-    split_inputs {
-        #address-cells = <1>;
-        #size-cells = <0>;
-
-        glidepoint_split: glidepoint_split@0 {
-            compatible = "zmk,input-split";
-            reg = <0>;
-            device = <&glidepoint>; // Link to the physical device node below
-        };
-    };
+// Link physical device to the split node defined in dtsi
+&glidepoint_split {
+    device = <&glidepoint>;
 };
 
 // Define and enable physical device node

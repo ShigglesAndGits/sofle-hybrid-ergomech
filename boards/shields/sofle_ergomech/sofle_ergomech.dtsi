@@ -71,10 +71,20 @@
          triggers-per-rotation = <20>;
      };
 
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        glidepoint_split: glidepoint_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
     glidepoint_listener: glidepoint_listener {
         compatible = "zmk,input-listener";
-        device = <&glidepoint>; // This will refer to the node in the overlay
-        status = "disabled";
+        device = <&glidepoint_split>; // Point listener to the split device
+        status = "disabled"; // Disabled by default, enabled on central overlay
     };
  };
  
@@ -99,8 +109,8 @@
 
     glidepoint: glidepoint@15 { // Use 0x15 as the address
         compatible = "cirque,pinnacle_i2c";
-        reg = <0x15>;
+        reg = <0x15>; // Use specified address 0x15
         status = "disabled"; // Disabled by default, enabled in overlay
-        interrupt-gpios = <&gpio0 17 GPIO_ACTIVE_LOW>; // Assuming active low interrupt
+        dr-gpios = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // Use dr-gpios, map to P0.08 (D0), assume active high
     };
  };

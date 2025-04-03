@@ -25,6 +25,11 @@
     status = "okay";
 };
 
+// Link the input-split node to the actual glidepoint device on this side
+&glidepoint_split {
+    device = <&glidepoint>;
+};
+
 // Enable the glidepoint device defined in the shared dtsi
 &glidepoint {
     status = "okay";

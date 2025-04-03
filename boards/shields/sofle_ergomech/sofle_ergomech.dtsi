@@ -108,7 +108,7 @@
      };
 
     glidepoint: glidepoint@15 { // Use 0x15 as the address
-        compatible = "cirque,pinnacle_i2c";
+        compatible = "cirque,pinnacle";
         reg = <0x15>; // Use specified address 0x15
         status = "disabled"; // Disabled by default, enabled in overlay
         dr-gpios = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // Use dr-gpios, map to P0.08 (D0), assume active high

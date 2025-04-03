@@ -111,6 +111,6 @@
         compatible = "cirque,pinnacle";
         reg = <0x15>; // Use specified address 0x15
         status = "disabled"; // Disabled by default, enabled in overlay
-        dr-gpios = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // Use dr-gpios, map to P0.08 (D0), assume active high
+        dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
     };
  };

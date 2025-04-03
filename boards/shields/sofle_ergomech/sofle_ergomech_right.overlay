@@ -25,12 +25,28 @@
     status = "okay";
 };
 
-// Link the input-split node to the actual glidepoint device on this side
-&glidepoint_split {
-    device = <&glidepoint>;
+// Define split input mechanism
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        glidepoint_split: glidepoint_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&glidepoint>; // Link to the physical device node below
+        };
+    };
 };
 
-// Enable the glidepoint device defined in the shared dtsi
-&glidepoint {
-    status = "okay";
+// Define and enable physical device node
+&pro_micro_i2c {
+    status = "okay"; // Ensure I2C bus is enabled
+
+    glidepoint: glidepoint@2a { // Use 0x2a address
+        compatible = "cirque,pinnacle";
+        reg = <0x2a>; // Use address 0x2a
+        status = "okay"; // Enable the device on this side
+        dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
+    };
 };

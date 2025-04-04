@@ -41,5 +41,6 @@
         dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
         x-invert; // Invert X axis
         rotate-90; // Rotate (swap) X and Y axes
+        sensitivity = "1x"; // Set sensitivity to highest
     };
 };

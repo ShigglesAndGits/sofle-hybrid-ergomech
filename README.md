@@ -47,8 +47,8 @@ This configuration utilizes 8 layers:
 
 ### Encoder Actions
 
-*   **BASE:** Left: Mouse Wheel Down/Up, Right: Scroll Down/Up
-*   **LOWER:** Left: Arrow Down/Up, Right: Scroll Left/Right
+*   **BASE:** Left: Mouse Wheel Down/Up, Right: Page Down/Up
+*   **LOWER:** Left: Arrow Down/Up, Right: Arrow Left/Right
 *   **RAISE:** Left: Arrow Left/Right, Right: Workspace Prev/Next
 *   **NAV:** Left: Volume Down/Up, Right: App Switch Prev/Next
 *   **WORK:** Left: Volume Down/Up, Right: Volume Down/Up

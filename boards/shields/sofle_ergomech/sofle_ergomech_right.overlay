@@ -39,7 +39,7 @@
         reg = <0x2a>; // Use address 0x2a
         status = "okay"; // Enable the device on this side
         dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
-        y-invert; // Invert Y axis to counteract hardware default
+        x-invert; // Invert X axis
         rotate-90; // Rotate (swap) X and Y axes
     };
 };

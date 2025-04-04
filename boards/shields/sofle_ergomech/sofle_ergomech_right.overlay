@@ -40,5 +40,6 @@
         status = "okay"; // Enable the device on this side
         dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
         y-invert; // Invert Y axis to counteract hardware default
+        swap-xy;  // Swap X and Y axes
     };
 };

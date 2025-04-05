@@ -51,7 +51,7 @@ This configuration utilizes 8 layers:
 *   **LOWER:** Arrow Down/Up
 *   **RAISE:** Arrow Left/Right
 *   **NAV:** Volume Down/Up
-*   **WORK:** Volume Down/Up
+*   **WORK:** Undo (Ctrl+Z) / Redo (Ctrl+Y)
 *   **SYSTEM:** Volume Down/Up
 *   **RESIZE:** Resize Horizontal (Left/Right)
 *   **RESIZE_SHIFT:** Resize Vertical (Down/Up)

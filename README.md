@@ -47,14 +47,14 @@ This configuration utilizes 8 layers:
 
 ### Encoder Actions
 
-*   **BASE:** Left: Mouse Wheel Down/Up, Right: Page Down/Up
-*   **LOWER:** Left: Arrow Down/Up, Right: Arrow Left/Right
-*   **RAISE:** Left: Arrow Left/Right, Right: Workspace Prev/Next
-*   **NAV:** Left: Volume Down/Up, Right: App Switch Prev/Next
-*   **WORK:** Left: Volume Down/Up, Right: Volume Down/Up
-*   **SYSTEM:** Left: Volume Down/Up, Right: Volume Down/Up
-*   **RESIZE:** Left: Resize Horizontal (Left/Right), Right: Resize Horizontal (Left/Right)
-*   **RESIZE_SHIFT:** Left: Resize Vertical (Down/Up), Right: Resize Vertical (Down/Up)
+*   **BASE:** Mouse Wheel Down/Up
+*   **LOWER:** Arrow Down/Up
+*   **RAISE:** Arrow Left/Right
+*   **NAV:** Volume Down/Up
+*   **WORK:** Volume Down/Up
+*   **SYSTEM:** Volume Down/Up
+*   **RESIZE:** Resize Horizontal (Left/Right)
+*   **RESIZE_SHIFT:** Resize Vertical (Down/Up)
 
 ## License
 

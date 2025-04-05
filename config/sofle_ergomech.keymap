@@ -100,7 +100,7 @@
         enc_mw_ud: enc_mw_ud {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&mkp MWH_DN>, <&mkp MWH_UP>; // Use &mkp for mouse keycodes
+            bindings = <&msc DOWN>, <&msc UP>; // Use &msc for mouse scroll
         };
         enc_pg_ud: enc_pg_ud {
             compatible = "zmk,behavior-sensor-rotate";

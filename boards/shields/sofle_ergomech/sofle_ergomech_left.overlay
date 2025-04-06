@@ -43,5 +43,6 @@
     input-processors = <
         &zip_gestures
         &zip_absolute_to_relative
+        &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP) // Swap X/Y back after rotate-90
     >;
 };

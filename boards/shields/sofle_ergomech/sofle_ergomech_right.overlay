@@ -39,9 +39,9 @@
         reg = <0x2a>; // Use address 0x2a
         status = "okay"; // Enable the device on this side
         dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
-        x-invert; // Invert X axis
+        // x-invert; // Invert X axis (Removed to fix left/right movement)
         rotate-90; // Rotate (swap) X and Y axes
-        sensitivity = "1x"; // Set sensitivity to highest
+        sensitivity = "2x"; // Set sensitivity
         absolute-mode; // Enable absolute mode for gestures
     };
 };

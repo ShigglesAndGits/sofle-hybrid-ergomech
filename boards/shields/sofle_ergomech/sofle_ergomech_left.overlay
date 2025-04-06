@@ -16,6 +16,9 @@
     tap-detection;
     inertial-cursor;
     circular-scroll;
+    circular-scroll-rim-percent = <13>; // Set rim activation area to 13%
+    prevent_movement_during_tap; // Prevent cursor drift during taps
+    inertial-cursor-decay-percent = <95>; // Set inertia decay (lower = more friction)
     // Optional gesture parameters can be added here
 };
 

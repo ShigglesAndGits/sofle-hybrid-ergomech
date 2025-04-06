@@ -5,6 +5,19 @@
  */
 
 #include "sofle_ergomech.dtsi"
+#include <behaviors/input_processor_gestures.dtsi>
+#include <behaviors/input_processor_absolute_to_relative.dtsi>
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+
+&zip_gestures {
+    status = "okay";
+    tap-detection;
+    inertial-cursor;
+    circular-scroll;
+    // Optional gesture parameters can be added here
+};
+
 
 &default_transform {
     col-offset = <6>;
@@ -43,5 +56,10 @@
         rotate-90; // Rotate (swap) X and Y axes
         sensitivity = "1x"; // Set sensitivity to highest
         absolute-mode; // Enable absolute mode for gestures
+        input-processors = <
+            &zip_gestures
+            &zip_absolute_to_relative
+            &zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_Y_INVERT)
+        >;
     };
 };

@@ -11,15 +11,14 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
-/ {
-    &zip_gestures {
-        status = "okay";
-        tap-detection;
-        inertial-cursor;
-        circular-scroll;
-        // Optional gesture parameters can be added here
-    };
+&zip_gestures {
+    status = "okay";
+    tap-detection;
+    inertial-cursor;
+    circular-scroll;
+    // Optional gesture parameters can be added here
 };
+
 
 &kscan0 {
     col-gpios

@@ -97,6 +97,14 @@
             bindings = <&kp LG(LS(TAB))>, <&kp LG(TAB)>;
         };
 
+        // Encoder scroll behavior
+        encoder_scroll_ud: encoder_scroll_ud {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
+            tap-ms = <20>;
+        };
+
         // Screenshot macro
 
         meta_shift_s: meta_shift_s {
@@ -524,7 +532,7 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&msc SCRL_DN &msc SCRL_UP>;
+            sensor-bindings = <&encoder_scroll_ud>;
         };
 
         raise_layer {

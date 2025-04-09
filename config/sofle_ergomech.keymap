@@ -524,7 +524,7 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
+            sensor-bindings = <&msc SCRL_DN &msc SCRL_UP>;
         };
 
         raise_layer {

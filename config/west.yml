@@ -4,14 +4,20 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: petejohanson
       url-base: https://github.com/petejohanson
+    - name: m165437
+      url-base: https://github.com/M165437
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
     - name: cirque-input-module
-      url: https://github.com/petejohanson/cirque-input-module
+      remote: petejohanson
       revision: main
       path: modules/cirque-input-module
+
+    - name: nice-view-gem
+      remote: m165437
+      revision: main
   self:
     path: config

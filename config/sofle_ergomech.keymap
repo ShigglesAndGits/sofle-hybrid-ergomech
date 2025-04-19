@@ -37,6 +37,15 @@
     };
 
     behaviors {
+        /* 1️⃣  A *variable* sensor‑rotation behavior that will call
+         *     whatever two behaviours we pass it in the keymap.
+         *     (Here we pass &msc twice – one for CW, one for CCW.)      */
+        scroll_enc: scroll_enc {                        // name is arbitrary
+            compatible = "zmk,behavior-sensor-rotate-var";
+            #sensor-binding-cells = <2>;
+            bindings = <&msc>, <&msc>;
+        };
+
         mute_mod: mute_mod {
             compatible = "zmk,behavior-hold-tap";
             label = "MUTE_MOD";
@@ -95,6 +104,20 @@
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&kp LG(LS(TAB))>, <&kp LG(TAB)>;
+        };
+
+        // Meta + Arrow key encoder behavior for NAV layer
+        nav_meta_arrow_enc: nav_meta_arrow_enc {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp LG(DOWN)>, <&kp LG(UP)>; // Clockwise: Meta+Down, Counter-clockwise: Meta+Up
+        };
+
+        // Left/Right Arrow key encoder behavior for RAISE layer
+        raise_arrow_lr_enc: raise_arrow_lr_enc {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp RIGHT>, <&kp LEFT>; // Clockwise: Right Arrow, Counter-clockwise: Left Arrow
         };
 
         // Encoder scroll behavior
@@ -532,7 +555,10 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&encoder_scroll_ud>;
+            /* 2️⃣  Encoder rotation binding for lower layer.
+             *     • First value = clockwise   → scroll **down**.
+             *     • Second value = counter‑cw → scroll **up**.          */
+            sensor-bindings = <&scroll_enc SCRL_DOWN SCRL_UP>;
         };
 
         raise_layer {
@@ -554,7 +580,7 @@
                                                 &kp C_PLAY_PAUSE  &kp C_NEXT  &kp C_PP  &kp C_PREVIOUS  &kp C_STOP
             >;
 
-            sensor-bindings = <&workspace_switch_encoder>;
+            sensor-bindings = <&raise_arrow_lr_enc>;
         };
 
         nav_layer {
@@ -576,7 +602,7 @@
                                                                &trans  &mv_r   &mv_u   &mv_l   &mv_d
             >;
 
-            sensor-bindings = <&app_switch_encoder>;
+            sensor-bindings = <&nav_meta_arrow_enc>;
         };
 
         work_layer {
@@ -598,7 +624,7 @@
                                                 &trans  &trans         &trans       &trans       &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>; // Clockwise: Vol Up, Counter-clockwise: Vol Down
         };
 
         system_layer {

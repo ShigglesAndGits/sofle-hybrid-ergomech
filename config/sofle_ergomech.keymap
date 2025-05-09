@@ -555,10 +555,10 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            /* 2️⃣  Encoder rotation binding for lower layer.
-             *     • First value = clockwise   → scroll **down**.
-             *     • Second value = counter‑cw → scroll **up**.          */
-            sensor-bindings = <&scroll_enc SCRL_DOWN SCRL_UP>;
+            /* Test: Using encoder_scroll_ud for simpler scroll behavior.
+             * Note: This will make Clockwise = Scroll UP, Counter-Clockwise = Scroll DOWN.
+             * The original was CW = Scroll DOWN, CCW = Scroll UP.          */
+            sensor-bindings = <&encoder_scroll_ud>;
         };
 
         raise_layer {

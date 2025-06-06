@@ -571,7 +571,7 @@
                                                                            &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
+            sensor-bindings = <&inc_dec_kp UP DOWN>;
         };
 
         lower_layer {

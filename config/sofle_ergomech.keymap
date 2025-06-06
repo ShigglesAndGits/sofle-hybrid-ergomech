@@ -5,7 +5,7 @@
  */
 // Define scroll speed before including pointing header
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 50
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 8
 
 // Include pointing device bindings for mouse scroll
 
@@ -757,7 +757,7 @@
 &mkp LCLK     &mkp RCLK       &mkp MCLK     &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &msc SCRL_UP  &msc SCRL_DOWN  &mmv MOVE_UP  &mmv MOVE_DOWN  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
                                                                             &trans  &trans  &trans  &trans  &trans
             >;
 

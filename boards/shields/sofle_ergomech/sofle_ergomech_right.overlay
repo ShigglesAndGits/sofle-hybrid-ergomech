@@ -38,8 +38,9 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>; // Use address 0x2a
         status = "okay"; // Enable the device on this side
-        dr-gpios = <&pro_micro 0 GPIO_ACTIVE_HIGH>; // Use dr-gpios, map to P0.08 (D0), assume active high
+        dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
         x-invert; // Invert X axis
-        sensitivity = "1x"; // Set sensitivity to highest
+        sensitivity = "2x"; // Reduced from 1x to 2x to decrease data volume
+        sleep-enable; // Enable sleep mode to help with power management
     };
 };

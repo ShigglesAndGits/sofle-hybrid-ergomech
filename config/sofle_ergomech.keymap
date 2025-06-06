@@ -5,6 +5,7 @@
  */
 // Define scroll speed before including pointing header
 
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 120  // default: 600 - controls smooth scroll sensitivity
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 8
 
 // Include pointing device bindings for mouse scroll

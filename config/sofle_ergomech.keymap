@@ -5,7 +5,7 @@
  */
 // Define scroll speed before including pointing header
 
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 120  // default: 600 - controls smooth scroll sensitivity
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 240  // default: 600 - controls smooth scroll sensitivity
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 8
 
 // Include pointing device bindings for mouse scroll
@@ -571,7 +571,7 @@
                                                                            &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
-            sensor-bindings = <&encoder_scroll_alt>;
+            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
         };
 
         lower_layer {
@@ -594,7 +594,7 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp LEFT RIGHT>;
+            sensor-bindings = <&encoder_scroll_alt>;
         };
 
         raise_layer {

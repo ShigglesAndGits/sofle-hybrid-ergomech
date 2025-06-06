@@ -41,6 +41,5 @@
         dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
         x-invert; // Invert X axis
         sensitivity = "2x"; // Reduced from 1x to 2x to decrease data volume
-        sleep-enable; // Enable sleep mode to help with power management
     };
 };

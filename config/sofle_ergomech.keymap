@@ -130,6 +130,13 @@
             bindings = <&kp LG(DOWN)>, <&kp LG(UP)>;
         };
 
+        // Page up/down encoder behavior
+        page_encoder: page_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&kp PG_DN>, <&kp PG_UP>;
+        };
+
         // Screenshot macro
 
         meta_shift_s: meta_shift_s {
@@ -645,7 +652,7 @@
                                                                &trans  &mv_r   &mv_u   &mv_l   &mv_d
             >;
 
-            sensor-bindings = <&app_switch_encoder>;
+            sensor-bindings = <&page_encoder>;
         };
 
         work_layer {

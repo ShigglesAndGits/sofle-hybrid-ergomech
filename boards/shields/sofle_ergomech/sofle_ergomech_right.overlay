@@ -40,6 +40,7 @@
         status = "okay"; // Enable the device on this side
         dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
         x-invert; // Invert X axis
+        y-invert; // Invert Y axis to fix direction
         sensitivity = "2x"; // Reduced from 1x to 2x to decrease data volume
         
         // Enable absolute mode for gesture recognition

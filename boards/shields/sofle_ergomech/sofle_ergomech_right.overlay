@@ -41,7 +41,7 @@
         dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
         x-invert; // Invert X axis
         y-invert; // Invert Y axis (back to hardware level)
-        sensitivity = "8x"; // Even more precise control
+        sensitivity = "4x"; // Maximum hardware sensitivity reduction
         
         // Back to relative mode - no gestures needed
         // absolute-mode;

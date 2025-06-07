@@ -773,33 +773,17 @@
     };
 };
 
-// Configure gesture processor for inertial cursor and tap detection
-&zip_gestures {
-    // Inertial cursor with momentum physics
-    inertial-cursor;
-    inertial-cursor-velocity-threshold = <2>;     // Lower = easier to trigger
-    inertial-cursor-decay-percent = <30>;         // Higher = faster stop
-    
-    // Circular scroll disabled - not working well yet
-    // circular-scroll;
-    // circular-scroll-rim-percent = <10>;
-    // circular-scroll-width = <1024>;
-    // circular-scroll-height = <1024>;
-    
-    // Tap detection for quick taps
-    tap-detection;
-    tap-timout-ms = <120>;
-    
-    // Wait time for position updates
-    wait-for-new-position-ms = <30>;
-};
+// Gesture processing disabled - using simple relative mode
+// &zip_gestures {
+//     // All gesture features disabled
+//     // inertial-cursor;
+//     // circular-scroll;
+//     // tap-detection;
+// };
 
-// Configure input processor pipeline for trackpad
+// Configure input processor pipeline for trackpad - simple relative mode
 &glidepoint_listener {
     input-processors = <
-        &zip_gestures                    // Gesture detection first (on absolute coords)
-        &zip_absolute_to_relative        // Convert to relative mode
-        &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)  // Software Y inversion
-        &zip_xy_scaler 3 2              // Existing scaling
+        &zip_xy_scaler 3 2              // Simple scaling only
     >;
 };

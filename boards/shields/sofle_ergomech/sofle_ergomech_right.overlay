@@ -40,12 +40,12 @@
         status = "okay"; // Enable the device on this side
         dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
         x-invert; // Invert X axis
-        // y-invert; // Try software Y inversion instead of hardware
+        y-invert; // Invert Y axis (back to hardware level)
         sensitivity = "4x"; // Reduced sensitivity for more precise control
         
-        // Enable absolute mode for gesture recognition
-        absolute-mode;
-        absolute-mode-scale-to-width = <1024>;
-        absolute-mode-scale-to-height = <1024>;
+        // Back to relative mode - no gestures needed
+        // absolute-mode;
+        // absolute-mode-scale-to-width = <1024>;
+        // absolute-mode-scale-to-height = <1024>;
     };
 };

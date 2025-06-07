@@ -781,9 +781,4 @@
 //     // tap-detection;
 // };
 
-// Configure input processor pipeline for trackpad - simple relative mode
-&glidepoint_listener {
-    input-processors = <
-        // No software processing - just raw hardware input
-    >;
-};
+// No input processor configuration - use default trackpad behavior

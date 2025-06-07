@@ -17,7 +17,7 @@
 
 // Include gesture processing support
 #include <input/processors.dtsi>
-#include <input_processor_gestures.dtsi>
+#include <behaviors/input_processor_gestures.dtsi>
 
 #define BASE 0
 #define LOWER 1

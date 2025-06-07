@@ -19,6 +19,7 @@
 #include <input/processors.dtsi>
 #include <behaviors/input_processor_gestures.dtsi>
 #include <behaviors/input_processor_absolute_to_relative.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
 
 #define BASE 0
 #define LOWER 1
@@ -772,12 +773,12 @@
     };
 };
 
-// Configure gesture processor for tap detection only
+// Configure gesture processor for inertial cursor and tap detection
 &zip_gestures {
-    // Inertial cursor disabled - momentum direction issues
-    // inertial-cursor;
-    // inertial-cursor-velocity-threshold = <2>;
-    // inertial-cursor-decay-percent = <30>;
+    // Inertial cursor with momentum physics
+    inertial-cursor;
+    inertial-cursor-velocity-threshold = <2>;     // Lower = easier to trigger
+    inertial-cursor-decay-percent = <30>;         // Higher = faster stop
     
     // Circular scroll disabled - not working well yet
     // circular-scroll;
@@ -796,8 +797,9 @@
 // Configure input processor pipeline for trackpad
 &glidepoint_listener {
     input-processors = <
-        &zip_gestures                    // Gesture detection first
-        &zip_absolute_to_relative        // Convert back to relative mode
+        &zip_gestures                    // Gesture detection first (on absolute coords)
+        &zip_absolute_to_relative        // Convert to relative mode
+        &zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)  // Software Y inversion
         &zip_xy_scaler 3 2              // Existing scaling
     >;
 };

@@ -784,6 +784,6 @@
 // Configure input processor pipeline for trackpad - simple relative mode
 &glidepoint_listener {
     input-processors = <
-        &zip_xy_scaler 6 2              // Increased scaling for 8x-like sensitivity
+        // No software processing - just raw hardware input
     >;
 };

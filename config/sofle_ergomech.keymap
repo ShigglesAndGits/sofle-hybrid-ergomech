@@ -781,4 +781,9 @@
 //     // tap-detection;
 // };
 
-// No input processor configuration - use default trackpad behavior
+// Configure input processor pipeline for trackpad - minimal working setup
+&glidepoint_listener {
+    input-processors = <
+        &zip_xy_scaler 1 1              // Minimal scaling to enable input processing
+    >;
+};

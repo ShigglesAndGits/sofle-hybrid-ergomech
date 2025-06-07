@@ -8,15 +8,13 @@ manifest:
       url-base: https://github.com/M165437
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
-    - name: halfdane
-      url-base: https://github.com/halfdane
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
     - name: cirque-input-module
-      remote: halfdane
+      remote: oleksandrmaslov
       revision: absolute_mode
       path: modules/cirque-input-module
 
@@ -27,7 +25,7 @@ manifest:
       remote: oleksandrmaslov
       revision: main
     - name: zmk-input-processors
-      remote: halfdane
+      remote: oleksandrmaslov
       revision: main
   self:
     path: config

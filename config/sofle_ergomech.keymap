@@ -772,20 +772,20 @@
     };
 };
 
-// Configure gesture processor for inertial cursor and circular scroll
+// Configure gesture processor for tap detection only
 &zip_gestures {
-    // Inertial cursor with momentum physics
-    inertial-cursor;
-    inertial-cursor-velocity-threshold = <2>;     // Lower = easier to trigger
-    inertial-cursor-decay-percent = <30>;         // Higher = faster stop
+    // Inertial cursor disabled - momentum direction issues
+    // inertial-cursor;
+    // inertial-cursor-velocity-threshold = <2>;
+    // inertial-cursor-decay-percent = <30>;
     
-    // Circular scroll on outer rim (requires absolute mode)
-    circular-scroll;
-    circular-scroll-rim-percent = <10>;           // 10% outer rim
-    circular-scroll-width = <1024>;               // Match absolute mode scaling
-    circular-scroll-height = <1024>;
+    // Circular scroll disabled - not working well yet
+    // circular-scroll;
+    // circular-scroll-rim-percent = <10>;
+    // circular-scroll-width = <1024>;
+    // circular-scroll-height = <1024>;
     
-    // Optional: Tap detection for quick taps
+    // Tap detection for quick taps
     tap-detection;
     tap-timout-ms = <120>;
     

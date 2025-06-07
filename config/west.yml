@@ -25,7 +25,7 @@ manifest:
       revision: main
     - name: zmk-input-gestures
       remote: oleksandrmaslov
-      revision: main
+      revision: peripheral
     - name: zmk-input-processors
       remote: halfdane
       revision: main

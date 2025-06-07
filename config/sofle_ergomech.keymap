@@ -15,6 +15,10 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+// Include gesture processing support
+#include <input/processors.dtsi>
+#include <input_processor_gestures.dtsi>
+
 #define BASE 0
 #define LOWER 1
 #define RAISE 2
@@ -764,5 +768,35 @@
 
             sensor-bindings = <&encoder_scroll_alt>;
         };
+    };
+
+    // Configure gesture processor for inertial cursor and circular scroll
+    &zip_gestures {
+        // Inertial cursor with momentum physics
+        inertial-cursor;
+        inertial-cursor-velocity-threshold = <2>;     // Lower = easier to trigger
+        inertial-cursor-decay-percent = <30>;         // Higher = faster stop
+        
+        // Circular scroll on outer rim (requires absolute mode)
+        circular-scroll;
+        circular-scroll-rim-percent = <10>;           // 10% outer rim
+        circular-scroll-width = <1024>;               // Match absolute mode scaling
+        circular-scroll-height = <1024>;
+        
+        // Optional: Tap detection for quick taps
+        tap-detection;
+        tap-timout-ms = <120>;
+        
+        // Wait time for position updates
+        wait-for-new-position-ms = <30>;
+    };
+
+    // Configure input processor pipeline for trackpad
+    &glidepoint_listener {
+        input-processors = <
+            &zip_gestures                    // Gesture detection first
+            &zip_absolute_to_relative        // Convert back to relative mode
+            &zip_xy_scaler 3 2              // Existing scaling
+        >;
     };
 };

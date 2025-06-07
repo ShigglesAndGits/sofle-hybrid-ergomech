@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/petejohanson
     - name: m165437
       url-base: https://github.com/M165437
+    - name: oleksandrmaslov
+      url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -18,6 +20,9 @@ manifest:
 
     - name: nice-view-gem
       remote: m165437
+      revision: main
+    - name: zmk-input-gestures
+      remote: oleksandrmaslov
       revision: main
   self:
     path: config

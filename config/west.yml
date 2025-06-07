@@ -16,8 +16,8 @@ manifest:
       revision: main
       import: app/west.yml
     - name: cirque-input-module
-      remote: petejohanson
-      revision: main
+      remote: halfdane
+      revision: absolute_mode
       path: modules/cirque-input-module
 
     - name: nice-view-gem
@@ -29,8 +29,5 @@ manifest:
     - name: zmk-input-processors
       remote: halfdane
       revision: main
-    - name: cirque-input-module
-      remote: halfdane
-      revision: absolute_mode
   self:
     path: config

@@ -786,10 +786,10 @@
         compatible = "zmk,input-listener";
         device = <&glidepoint_split>;
         
-        // Layer-specific behavior for RAISE layer - convert movement to scrolling
+        // Layer-specific behavior for RAISE layer - convert movement to scrolling with reduced sensitivity
         raise_scroll_override {
             layers = <RAISE>;
-            input-processors = <&zip_xy_to_scroll_mapper>;
+            input-processors = <&zip_xy_scaler 1 4>, <&zip_xy_to_scroll_mapper>;
         };
     };
 };

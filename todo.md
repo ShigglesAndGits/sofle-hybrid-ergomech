@@ -3,4 +3,6 @@
 - [ ] Reverse arrow key direction of encoder on first layer to align with scrolling direction on lower layer
 - [ ] Increase scroll speed by 2x
 - [ ] Add gaming layer with left thumb keys replaced with mappable keys (f13-15?)
-- [ ] Find functions for right thumb buttons 
+- [ ] Find functions for right thumb buttons
+- [ ] Disable mouse cursor movement when scrolling with trackpad on raise layer
+- [ ] Use doubletap of rightmost thumb key on right side to switch to gaming layer 

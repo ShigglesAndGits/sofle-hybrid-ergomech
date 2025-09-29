@@ -23,12 +23,13 @@ The base layer follows a standard QWERTY layout with ergonomic optimizations:
 
 ### Thumb Cluster
 
-- Left: GUI, ALT, CTRL
+- Left: GUI, ALT (double-tap for media play/pause), CTRL
 - Right: NAV (tap dance), WORK (tap dance), CTRL
 
 ### Encoders
 
-- Default Layer: Volume control
+- Default Layer: Smooth scrolling (moved from LOWER layer)
+- LOWER Layer: Arrow key navigation UP/DOWN (inverted direction, moved from BASE)
 - NAV Layer: Workspace switching (Super+Tab / Super+Shift+Tab)
 - WORK Layer: Application switching (Alt+Tab / Alt+Shift+Tab)
 - Resize Layer: Window size adjustment
@@ -43,20 +44,32 @@ The base layer follows a standard QWERTY layout with ergonomic optimizations:
 - 10-second timeout when idle
 - 1-second refresh rate
 
+## Lower Layer (1)
+
+Activated by single-tapping the NAV key. Contains numbers, symbols, and navigation functions:
+
+- Numbers and symbols in numpad layout
+- Mouse controls (left, right, middle, scroll buttons)
+- Navigation keys: Page Up, Page Down, Home, End (right thumb cluster)
+- Encoder provides UP/DOWN arrow key navigation (inverted direction)
+- Bluetooth device selection
+
+## Raise Layer (2)
+
+Activated by single-tapping the WORK key. Contains function keys and navigation:
+
+- Function keys F1-F12 arranged in groups
+- Navigation keys: Page Up, Page Down, Home, End (right thumb cluster, same as LOWER)
+- Trackpad scrolling mode with proper left/right scroll direction (X-axis inverted)
+- Additional symbols and shortcuts
+
 ## Navigation Layer (3)
 
-Activated by double-tapping the NAV key. Focuses on text navigation and editing. Features workspace switching via encoder:
+Activated by double-tapping the NAV key. Focuses on window management and navigation:
 
-- Vim-style navigation:
-  - H: Left
-  - J: Down
-  - K: Up
-  - L: Right
-- Text manipulation:
-  - Word movement
-  - Line start/end
-  - Page up/down
-- Selection tools when combined with shift
+- COSMIC window management macros
+- Window movement and positioning controls
+- Encoder provides workspace switching (Super+Tab / Super+Shift+Tab)
 
 ## Work Layer (4)
 
@@ -116,6 +129,9 @@ Advanced window management features activated by combining RESIZE and LOWER:
 - WORK key:
   - Single tap: RAISE layer
   - Double tap: Work layer
+- ALT keys (both left and right):
+  - Single tap: ALT modifier
+  - Double tap: Media play/pause
 
 ### Conditional Layers
 

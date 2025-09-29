@@ -42,8 +42,8 @@ The keyboard uses 8 distinct layers:
 
 ### System Controls
 
-- Media playback controls
-- Volume control via encoder
+- Media playback controls via ALT double-tap (play/pause anywhere)
+- Volume control via WORK layer encoder
 - System management shortcuts (Ctrl+Alt+Del, etc.)
 - Quick screenshot capability (Super+Shift+S)
 - Terminal launcher (Super+T)
@@ -54,7 +54,8 @@ The keyboard uses 8 distinct layers:
 - RESIZE_SHIFT activates when RESIZE_LAYER and LOWER are combined
 
 ### Encoder Configuration
-- Default: Volume control
+- Default: Smooth scrolling (moved from LOWER layer)
+- LOWER layer: Arrow key navigation UP/DOWN (inverted direction, moved from BASE)
 - NAV layer: Workspace switching (Super+Tab / Super+Shift+Tab)
 - WORK layer: Application switching (Alt+Tab / Alt+Shift+Tab)
 - Resize layer: Window size adjustment
@@ -66,14 +67,26 @@ The keyboard uses 8 distinct layers:
 - Standard QWERTY layout
 - Optimized thumb cluster with Space, Enter, and layer access
 - Shift keys on both sides
-- GUI, Alt, and Ctrl modifiers readily accessible
+- GUI, Alt (with double-tap media play/pause), and Ctrl modifiers readily accessible
+- Encoder provides smooth scrolling functionality
 
 ### Navigation Layer (NAV)
 
 - Arrow keys in vim-style HJKL configuration
-- Page Up, Page Down, Home, and End
 - Text selection and manipulation
 - Encoder for workspace switching
+
+### Lower Layer
+
+- Numbers, symbols, and mouse controls
+- Page Up, Page Down, Home, and End navigation keys
+- Encoder provides arrow key navigation (UP/DOWN, inverted direction)
+
+### Raise Layer
+
+- Function keys and additional symbols
+- Page Up, Page Down, Home, and End navigation keys (same as LOWER layer)
+- Trackpad scrolling with inverted left/right movement for proper scroll direction
 
 ### Work Layer (WORK)
 

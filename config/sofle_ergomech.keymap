@@ -639,7 +639,7 @@
                                                                                      &none     &kp END  &kp PG_UP  &kp HOME              &kp PAGE_DOWN
             >;
 
-            sensor-bindings = <&inc_dec_kp UP DOWN>;
+            sensor-bindings = <&inc_dec_kp DOWN UP>;
         };
 
         raise_layer {
@@ -846,13 +846,11 @@
         // 3. OR change layers = <RAISE>; to layers = <999>; (unused layer)
         //
         // PROCESSOR CHAIN EXPLANATION:
-        // 1. &zip_xy_scaler 0 1 - Zeros out original X/Y movement (eliminates cursor movement)
-        // 2. &zip_xy_scaler 1 4 - Scales movement for scroll sensitivity (25% of original)
-        // 3. &zip_xy_to_scroll_mapper - Converts X/Y movement to scroll wheel events
-        // NOTE: X-axis inversion for scrolling will need to be implemented via hardware/driver config
+        // 1. &zip_xy_scaler 1 4 - Scales movement for scroll sensitivity (25% of original)
+        // 2. &zip_xy_to_scroll_mapper - Converts X/Y movement to scroll wheel events
         raise_scroll_override {
             layers = <RAISE>;
-            input-processors = <&zip_xy_scaler 0 1>, <&zip_xy_scaler 1 4>, <&zip_xy_to_scroll_mapper>;
+            input-processors = <&zip_xy_scaler 1 4>, <&zip_xy_to_scroll_mapper>;
         };
     };
 };

@@ -15,7 +15,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 #include <input/processors.dtsi>
-#include <dt-bindings/input/input-transform.h>
 
 #define BASE 0
 #define LOWER 1
@@ -849,11 +848,11 @@
         // PROCESSOR CHAIN EXPLANATION:
         // 1. &zip_xy_scaler 0 1 - Zeros out original X/Y movement (eliminates cursor movement)
         // 2. &zip_xy_scaler 1 4 - Scales movement for scroll sensitivity (25% of original)
-        // 3. &zip_xy_transform INPUT_TRANSFORM_X_INVERT - Inverts X-axis movement for proper left/right scrolling direction
-        // 4. &zip_xy_to_scroll_mapper - Converts X/Y movement to scroll wheel events
+        // 3. &zip_xy_to_scroll_mapper - Converts X/Y movement to scroll wheel events
+        // NOTE: X-axis inversion for scrolling will need to be implemented via hardware/driver config
         raise_scroll_override {
             layers = <RAISE>;
-            input-processors = <&zip_xy_scaler 0 1>, <&zip_xy_scaler 1 4>, <&zip_xy_transform INPUT_TRANSFORM_X_INVERT>, <&zip_xy_to_scroll_mapper>;
+            input-processors = <&zip_xy_scaler 0 1>, <&zip_xy_scaler 1 4>, <&zip_xy_to_scroll_mapper>;
         };
     };
 };

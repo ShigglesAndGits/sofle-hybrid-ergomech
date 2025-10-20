@@ -612,7 +612,7 @@
 &kp ESC     &kp Q     &kp W     &kp E            &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D            &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C            &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&mo 9       &td_alt_media  &kp LGUI  &td_ctrl_resize  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp RGUI  &td_alt_media
+&mo 9       &td_alt_media  &kp LGUI  &td_ctrl_resize  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &td_alt_media
                                                                            &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
@@ -808,7 +808,7 @@
 &kp ESC     &kp Q     &kp W     &kp E       &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D       &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C       &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&mo 9       &td_alt_media  &kp F13   &kp LCTRL   &kp SPACE  &kp F14        &td_layer_work  &kp ENTER  &kp RCTRL     &kp RGUI  &td_alt_media
+&mo 9       &td_alt_media  &kp F13   &kp LCTRL   &kp SPACE  &kp F14        &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &td_alt_media
                                                                       &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 

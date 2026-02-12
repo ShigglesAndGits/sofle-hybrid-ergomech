@@ -9,15 +9,14 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: v0.3
       import: app/west.yml
     - name: cirque-input-module
       remote: petejohanson
       revision: main
       path: modules/cirque-input-module
-
     - name: nice-view-gem
       remote: m165437
-      revision: main
+      revision: v0.3.0
   self:
     path: config

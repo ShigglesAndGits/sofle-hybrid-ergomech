@@ -22,10 +22,7 @@
 #define NAV 3
 #define WORK 4
 #define SYSTEM 5
-#define RESIZE_LAYER 6
-#define RESIZE_SHIFT 7
-#define GAMING 8
-#define ENCODER_DIR 10
+#define ENCODER_DIR 6
 
 / {
     // Activate SYSTEM layer by pressing nav and work layers together
@@ -36,11 +33,6 @@
         system_layer {
             if-layers = <3 4>;
             then-layer = <5>;
-        };
-
-        resize_shift_condition {
-            if-layers = <6 1>;  // RESIZE_LAYER and LOWER (using LOWER as shift indicator)
-            then-layer = <7>;   // RESIZE_SHIFT layer
         };
     };
 
@@ -65,24 +57,6 @@
             tap-ms = <50>;
         };
 
-        mute_mod: mute_mod {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MUTE_MOD";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&mo>, <&kp>;
-        };
-
-        space_mod: space_mod {
-            compatible = "zmk,behavior-hold-tap";
-            label = "SPACE_MOD";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&mo>, <&kp>;
-        };
-
         td_layer_nav: tap_dance_layer_nav {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
@@ -97,91 +71,11 @@
             bindings = <&mo RAISE>, <&mo WORK>;
         };
 
-        // Special encoder behaviors for resize functionality
-
-        resize_encoder_lr: resize_encoder_lr {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp LEFT>, <&kp RIGHT>;
-        };
-
-        resize_encoder_ud: resize_encoder_ud {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp DOWN>, <&kp UP>;
-        };
-
-        // App switching encoder behaviors
-
-        app_switch_encoder: app_switch_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp LA(LS(TAB))>, <&kp LA(TAB)>;
-        };
-
-        workspace_switch_encoder: workspace_switch_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp LG(LS(TAB))>, <&kp LG(TAB)>;
-        };
-
-        // Window minimize/maximize encoder behavior
+        // Window minimize/maximize encoder behavior (used in raise_layer)
         win_vertical_encoder: win_vertical_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&kp LG(DOWN)>, <&kp LG(UP)>;
-        };
-
-        // Page up/down encoder behavior
-        page_encoder: page_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&kp PG_DN>, <&kp PG_UP>;
-        };
-
-        // Screenshot macro
-
-        meta_shift_s: meta_shift_s {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI &kp LSHFT>,
-                <&macro_tap>,
-                <&kp S>,
-                <&macro_release>,
-                <&kp LGUI &kp LSHFT>;
-
-            label = "META_SHIFT_S";
-        };
-
-        // Windows terminal launcher
-
-        launch_terminal: launch_terminal {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp T>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "LAUNCH_TERMINAL";
-        };
-
-        wkup: wkup {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_pause_for_release>,
-                <&kp LEFT_GUI &kp LCTRL>,
-                <&macro_press>,
-                <&kp DOWN>,
-                <&macro_release>;
-
-            label = "WKUP";
         };
 
         ctrlAltDel: ctrlAltDel {
@@ -226,22 +120,6 @@
             label = "CTRLALTEND";
         };
 
-        // Windows System Management
-
-        wn_task: wn_task {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL &kp LSHFT>,
-                <&macro_tap>,
-                <&kp ESC>,
-                <&macro_release>,
-                <&kp LCTRL &kp LSHFT>;
-
-            label = "WN_TASK";
-        };
-
         // Copy/Paste Macros
 
         copy_macro: copy_macro {
@@ -256,20 +134,6 @@
                 <&kp LCTRL>;
 
             label = "COPY_MACRO";
-        };
-
-        paste_macro: paste_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL>,
-                <&macro_tap>,
-                <&kp V>,
-                <&macro_release>,
-                <&kp LCTRL>;
-
-            label = "PASTE_MACRO";
         };
 
         paste_plain: paste_plain {
@@ -314,20 +178,6 @@
                 <&kp LGUI>;
 
             label = "CS_MAX";
-        };
-
-        cs_full: cs_full {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp F>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "CS_FULL";
         };
 
         cs_close: cs_close {
@@ -474,101 +324,6 @@
             label = "NAV_D";
         };
 
-        // IT Tools
-
-        services_msc: services_msc {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&kp LGUI &kp R>,
-                <&macro_wait_time 100>,
-                <&kp S &kp E &kp R &kp V &kp I &kp C &kp E &kp S &kp DOT &kp M &kp S &kp C &kp ENTER>;
-
-            label = "SERVICES_MSC";
-        };
-
-        // Text Snippets
-
-        good_morning: good_morning {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp G &kp O &kp O &kp D &kp SPACE &kp M &kp O &kp R &kp N &kp I &kp N &kp G &kp COMMA &kp SPACE>;
-
-            label = "GOOD_MORNING";
-        };
-
-        good_afternoon: good_afternoon {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp G &kp O &kp O &kp D &kp SPACE &kp A &kp F &kp T &kp E &kp R &kp N &kp O &kp O &kp N &kp COMMA &kp SPACE>;
-
-            label = "GOOD_AFTERNOON";
-        };
-
-        thank_you: thank_you {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp T &kp H &kp A &kp N &kp K &kp SPACE &kp Y &kp O &kp U &kp SPACE &kp F &kp O &kp R &kp SPACE &kp Y &kp O &kp U &kp R &kp SPACE &kp T &kp I &kp M &kp E &kp SPACE &kp I &kp N &kp SPACE &kp T &kp R &kp O &kp U &kp B &kp L &kp E &kp S &kp H &kp O &kp O &kp T &kp I &kp N &kp G &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp T &kp I &kp C &kp K &kp E &kp T &kp DOT>;
-
-            label = "THANK_YOU";
-        };
-
-        closing_case: closing_case {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp A &kp S &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp S &kp H &kp O &kp U &kp L &kp D &kp SPACE &kp R &kp E &kp S &kp O &kp L &kp V &kp E &kp SPACE &kp T &kp H &kp E &kp SPACE &kp I &kp S &kp S &kp U &kp E &kp COMMA &kp SPACE &kp I &kp SPACE &kp W &kp I &kp L &kp L &kp SPACE &kp C &kp L &kp O &kp S &kp E &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp C &kp A &kp S &kp E &kp DOT &kp SPACE &kp P &kp L &kp E &kp A &kp S &kp E &kp SPACE &kp D &kp O &kp SPACE &kp N &kp O &kp T &kp SPACE &kp H &kp E &kp S &kp I &kp T &kp A &kp T &kp E &kp SPACE &kp T &kp O &kp SPACE &kp R &kp E &kp A &kp C &kp H &kp SPACE &kp O &kp U &kp T &kp SPACE &kp B &kp Y &kp SPACE &kp P &kp H &kp O &kp N &kp E &kp SPACE &kp O &kp R &kp SPACE &kp B &kp Y &kp SPACE &kp R &kp E &kp S &kp P &kp O &kp N &kp D &kp I &kp N &kp G &kp SPACE &kp T &kp O &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp E &kp M &kp A &kp I &kp L &kp SPACE &kp T &kp O &kp SPACE &kp R &kp E &kp MINUS &kp O &kp P &kp E &kp N &kp SPACE &kp T &kp H &kp E &kp SPACE &kp T &kp I &kp C &kp K &kp E &kp T &kp DOT &kp SPACE &kp T &kp H &kp A &kp N &kp K &kp SPACE &kp Y &kp O &kp U &kp DOT>;
-
-            label = "CLOSING_CASE";
-        };
-
-        following_up: following_up {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_tap>,
-                <&kp A &kp R &kp E &kp SPACE &kp T &kp H &kp E &kp R &kp E &kp SPACE &kp A &kp N &kp Y &kp SPACE &kp U &kp P &kp D &kp A &kp T &kp E &kp S &kp SPACE &kp O &kp N &kp SPACE &kp T &kp H &kp I &kp S &kp SPACE &kp I &kp S &kp S &kp U &kp E &kp QUESTION>;
-
-            label = "FOLLOWING_UP";
-        };
-
-        cs_resize: cs_resize {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&mo RESIZE_LAYER &kp LGUI &kp R>,
-                <&macro_pause_for_release>,
-                <&macro_release>,
-                <&mo RESIZE_LAYER &kp LGUI &kp R>;
-
-            label = "CS_RESIZE";
-        };
-
-        td_ctrl_resize: tap_dance_ctrl_resize {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp LCTRL>, <&cs_resize>;
-
-            label = "TAP_DANCE_CTRL_RESIZE";
-        };
-
-        // Gaming layer toggle behavior (RALT + RMETA combo)
-        gaming_toggle: gaming_toggle {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&tog GAMING>;
-            label = "GAMING_TOGGLE";
-        };
-
         // ALT tap dance behavior - single tap ALT, double tap play/pause
         td_alt_media: tap_dance_alt_media {
             compatible = "zmk,behavior-tap-dance";
@@ -579,21 +334,6 @@
         };
     };
 
-    macros {
-    };
-
-    // Combo definitions for special functions
-    combos {
-        compatible = "zmk,combos";
-        
-        // RALT + RMETA = Toggle Gaming Layer
-        gaming_combo {
-            bindings = <&gaming_toggle>;
-            key-positions = <59 58>; // RALT (row 4, col 10) + RMETA (row 4, col 9)
-            layers = <BASE GAMING>; // Available on base and gaming layers
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -601,18 +341,18 @@
             label = "default";
 
             // ------------------------------------------------------------------------------------------------------------
-            // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |       |
+            // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   -   |
             // |  ESC  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   | BKSPC |
             // |  TAB  |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
-            // | SHIFT |  Z  |  X  |  C   |  V   |  B   |  MUTE  |  |       |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-            //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
+            // | SHIFT |  Z  |  X  |  C   |  V   |  B   |                   |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+            //         | -   | ALT | GUI  | CTRL | SPACE| LWR/NAV| RSE/WORK | ENTER| RCTRL |K_CMENU| ALT  |
 
             bindings = <
 &kp GRAVE   &kp N1    &kp N2    &kp N3           &kp N4     &kp N5         &kp N6          &kp N7     &kp N8        &kp N9    &kp N0    &kp MINUS
 &kp ESC     &kp Q     &kp W     &kp E            &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D            &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C            &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&mo 9       &td_alt_media  &kp LGUI  &td_ctrl_resize  &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &td_alt_media
+&none       &td_alt_media  &kp LGUI  &kp LCTRL        &kp SPACE  &td_layer_nav  &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &td_alt_media
                                                                            &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
             >;
 
@@ -676,7 +416,7 @@
 
             bindings = <
 &trans       &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&cs_close    &trans  &nav_u  &cs_resize  &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
+&cs_close    &trans  &nav_u  &trans      &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &nav_l  &nav_d  &nav_r      &cs_max    &cs_wk     &trans  &trans  &trans  &trans  &trans  &trans
 &ctrlAltDel  &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
 &trans       &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans
@@ -730,91 +470,6 @@
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
-        resize_shift_layer_vertical {
-            label = "resize_shift_vertical";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            //               |     |      |      |      |                |      |      |       |      |
-
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
-        };
-
-        resize_layer {
-            label = "resize";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            //               |     |      |      |      |                |      |      |       |      |
-
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&resize_encoder_lr>;
-        };
-
-        resize_shift_layer_horizontal {
-            label = "resize_shift_horizontal";
-
-            // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            //               |     |      |      |      |                |      |      |       |      |
-
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                &trans  &trans  &trans  &trans  &trans
-            >;
-
-            sensor-bindings = <&resize_encoder_ud>;
-        };
-
-        gaming_layer {
-            label = "Gaming";
-
-            // Gaming layer - same as base but with modified left thumb cluster
-            // Left thumb cluster: ALT | F13 | CTRL | SPACE | F14
-            // Toggle back to base with RALT + RMETA combo
-
-            bindings = <
-&kp GRAVE   &kp N1    &kp N2    &kp N3      &kp N4     &kp N5         &kp N6          &kp N7     &kp N8        &kp N9    &kp N0    &kp MINUS
-&kp ESC     &kp Q     &kp W     &kp E       &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
-&kp TAB     &kp A     &kp S     &kp D       &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
-&kp LSHIFT  &kp Z     &kp X     &kp C       &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&mo 9       &td_alt_media  &kp F13   &kp LCTRL   &kp SPACE  &kp F14        &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &td_alt_media
-                                                                      &kp ENTER       &kp RIGHT  &kp UP_ARROW  &kp LEFT  &kp DOWN
-            >;
-
-            sensor-bindings = <&encoder_scroll_alt>;
-        };
-
         encoder_dir_layer {
             label = "encoder_dir";
             bindings = <
@@ -830,27 +485,4 @@
         };
     };
 
-    // Input listener for trackpad with layer-conditional scrolling
-    trackpad_listener {
-        compatible = "zmk,input-listener";
-        device = <&glidepoint_split>;
-        
-        // Layer-specific behavior for RAISE layer - convert movement to scrolling with NO cursor movement
-        // 
-        // IMPORTANT: This configuration completely disables cursor movement on RAISE layer
-        // and replaces it with 4-directional scrolling at 25% sensitivity.
-        //
-        // TO DISABLE THIS BEHAVIOR:
-        // 1. Comment out the entire "raise_scroll_override" section below
-        // 2. OR replace with: input-processors = <>;
-        // 3. OR change layers = <RAISE>; to layers = <999>; (unused layer)
-        //
-        // PROCESSOR CHAIN EXPLANATION:
-        // 1. &zip_xy_scaler 1 4 - Scales movement for scroll sensitivity (25% of original)
-        // 2. &zip_xy_to_scroll_mapper - Converts X/Y movement to scroll wheel events
-        raise_scroll_override {
-            layers = <RAISE>;
-            input-processors = <&zip_xy_scaler 1 4>, <&zip_xy_to_scroll_mapper>;
-        };
-    };
 };

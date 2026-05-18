@@ -40,6 +40,6 @@
         status = "okay";
         data-ready-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
         invert-x;
-        sensitivity = "2x";
+        sensitivity = "1x";
     };
 };

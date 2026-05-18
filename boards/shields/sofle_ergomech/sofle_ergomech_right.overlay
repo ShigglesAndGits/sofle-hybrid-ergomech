@@ -34,12 +34,12 @@
 &pro_micro_i2c {
     status = "okay"; // Ensure I2C bus is enabled
 
-    glidepoint: glidepoint@2a { // Use 0x2a address
+    glidepoint: glidepoint@2a {
         compatible = "cirque,pinnacle";
-        reg = <0x2a>; // Use address 0x2a
-        status = "okay"; // Enable the device on this side
-        dr-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>; // Changed from pin 0 to pin 1 to avoid UART conflicts
-        x-invert; // Invert X axis
-        sensitivity = "2x"; // Reduced from 1x to 2x to decrease data volume
+        reg = <0x2a>;
+        status = "okay";
+        data-ready-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
+        invert-x;
+        sensitivity = "2x";
     };
 };

@@ -2,8 +2,6 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: petejohanson
-      url-base: https://github.com/petejohanson
     - name: m165437
       url-base: https://github.com/M165437
   projects:
@@ -11,11 +9,6 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: cirque-input-module
-      remote: petejohanson
-      revision: main
-      path: modules/cirque-input-module
-
     - name: nice-view-gem
       remote: m165437
       revision: main

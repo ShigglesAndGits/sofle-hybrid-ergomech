@@ -15,6 +15,7 @@
 include:
   - board: nice_nano//zmk
     shield: sofle_ergomech_left nice_view_adapter nice_view_gem
+    snippet: zmk-usb-logging
   - board: nice_nano//zmk
     shield: sofle_ergomech_right
   - board: nice_nano//zmk

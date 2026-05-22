@@ -393,10 +393,10 @@
             //                |      |       |       |      |      |  |      |      |      |       |      |
 
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans    &trans    &trans     &trans         &kp PLUS
-&trans  &trans  &trans  &trans  &trans  &trans  &kp HOME    &kp PG_DN &kp PG_UP &kp END    &kp BACKSLASH  &kp DEL
-&trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT    &kp DOWN  &kp UP    &kp RIGHT  &trans         &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans      &trans    &trans    &trans     &trans         &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans    &trans    &trans     &trans     &kp PLUS
+&trans  &trans  &trans  &trans  &trans  &trans  &kp BACKSLASH  &kp HOME  &kp PG_DN &kp PG_UP  &kp END    &kp DEL
+&trans  &trans  &trans  &trans  &trans  &trans  &trans         &kp LEFT  &kp DOWN  &kp UP     &kp RIGHT  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans    &trans    &trans     &trans     &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans            &trans      &trans    &trans          &trans
                                                 &none     &none    &none      &none                 &none
             >;

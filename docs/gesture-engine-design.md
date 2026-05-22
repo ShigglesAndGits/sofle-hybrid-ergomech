@@ -601,12 +601,18 @@ Items I need to resolve before writing code (or that user testing must answer):
 - **`[H2]` Effective sample rate.** Observed ms-between-samples. Determines real-world `delta_time` for velocity calc.
 - **`[H3]` Subjective feel sweep** of each tunable. Done after each gesture lands. Defaults will move based on this.
 
-### Open design questions to discuss
+### Design decisions (resolved)
 
-- **`[D1]` Should the gesture engine be ONE processor or TWO?** Option A: one big processor doing everything. Option B: split it — a "sample builder" processor that just accumulates X/Y/Z into samples, then downstream processors per gesture. B is more composable but more complex to wire. Leaning A for v1.
-- **`[D2]` Layer-conditional gesture sets.** ZMK supports `layers = <RAISE>;` on input-listener nodes. Do we want layers to swap which gesture set is active, OR do we keep one engine and have layers only affect output (e.g., RAISE makes EVERY movement a scroll)? Leaning the latter — simpler.
-- **`[D3]` Drag-lock vs. tap-and-hold-and-drag.** Some users prefer "tap, immediately touch again and don't lift = drag mode". Others want "tap-tap-and-hold = lock". We may want both modes selectable.
-- **`[D4]` What happens to inertial coast when a new touch lands mid-coast?** Cancel immediately (snappy) or smoothly absorb the new velocity (continuous)? Lean snappy for v1.
+- **`[D1] ✅ DECIDED: B`** — multi-processor architecture. The gesture engine is composed of cooperating processors (sample_builder → state_machine → individual gesture handlers as separate processor nodes), wired together in the input-listener chain. More LOC up front; pays back in composability — combined with D2=A, this is what enables per-layer gesture set swapping without monolithic mode flags. The file layout in §4.2 already reflects this — each gesture module is independently addressable.
+
+- **`[D2] ✅ DECIDED: A`** — per-layer gesture sets. Different layers can have completely different processor chains in their input-listener block. Default layer gets the full engine; RAISE gets a scroll-only chain; future layers (precision mode, navigation mode) get their own profiles. The cost is more DT wiring per layer, but combined with D1=B that wiring is just composing existing processor nodes, not configuring monolithic internals.
+
+- **`[D3] ✅ DECIDED: both modes, configurable; default = immediate (Mode A)`** — the real distinction between modes is what happens to the held button when the finger lifts at end of drag:
+  - **Mode A (`drag-lock-release-mode = immediate`, default)**: lift finger → button released immediately, drag ends. libinput's default. Best for short/simple drags.
+  - **Mode B (`drag-lock-release-mode = sticky`)**: lift finger → button stays held; next finger-down resumes drag; single tap releases. Best for long/multi-segment drags (drawing curves, multi-stage selections).
+  - Both modes are implemented; user opts into sticky via the DT property. Defaults to immediate because it's the less-surprising behavior for new users.
+
+- **`[D4] ✅ DECIDED: snappy (cancel on touch)`** — new touch during INERTIAL_COAST immediately cancels the coast (calls `k_work_cancel_delayable_sync` on the coast tick) and transitions to MAYBE_TAP for the new touch. Future option `inertial-on-touch = cancel | absorb` may be added if users want the continuous-feel alternative, but default behavior is locked as cancel.
 
 ---
 

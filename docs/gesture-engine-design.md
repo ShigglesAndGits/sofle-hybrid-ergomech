@@ -343,12 +343,14 @@ tap-tap-drag sequence:
   finger up                   → release button, → INERTIAL_COAST or IDLE
 ```
 
-**Tunables**:
-- `tap-window-ms` — max duration of a tap (default 200 ms)
-- `tap-max-distance` — max movement during tap window in sensor units (default 64)
+**Tunables** (defaults sourced from libinput's tuned values where available — see `[R5]`):
+- `tap-window-ms` — max duration of a tap (default 180 ms; libinput uses 180 — 15+ years of touchpad tuning agree).
+- `tap-max-distance` — max movement during tap window in sensor units (default 60; libinput uses 1.3 mm, which on Cirque GlidePoint Circle 40mm with default Zephyr scaling ≈ 58 sensor units).
 - `tap-button` — which mouse button to send (default `MB1`)
 - `drag-lock-enable` (boolean)
-- `drag-lock-window-ms` — time window for tap-tap-drag (default 250 ms)
+- `drag-lock-window-ms` — time after first tap during which a second touch starts a drag (default 180 ms; libinput uses 160 ms base + 20 ms/finger).
+- `drag-lock-release-mode` — `sticky` (tap to release, default) or `timeout` (release after no contact for N ms; libinput offers both).
+- `drag-lock-release-timeout-ms` — only used in timeout mode (default 300 ms; matches libinput).
 
 ### 6.2 Cursor motion
 
@@ -367,21 +369,58 @@ tap-tap-drag sequence:
 
 ### 6.3 Circular scroll
 
-**Initiation**: touch starts in the rim band (annular region between `(1 - circular-scroll-rim-pct)` and `1.0` of `radius_from_center`). Geometry uses actual touchpad active-area bounds from DT (`active-range-*`).
+**Two-phase design** — borrows from QMK's well-validated approach (see `[R7]`). Touch in the rim alone is NOT enough to enter scroll mode; we additionally validate that the motion is tangential (along the rim) rather than radial (toward/away from center). This prevents false-positive scrolls when the user touches the rim and moves toward the center for a normal cursor action.
 
-**Algorithm**:
-1. On entry, record initial angle `θ₀ = atan2f(y - cy, x - cx)`
-2. On each subsequent sample, compute `θ = atan2f(y - cy, x - cx)`
-3. Compute angular delta `Δθ = normalize(θ - θ_prev)` to range `[-π, π]`
-4. Accumulate into `angle_accum += Δθ`
-5. When `abs(angle_accum) >= scroll-emit-angle-rad`, emit `INPUT_REL_WHEEL` with `sign(angle_accum)` and subtract `sign * scroll-emit-angle-rad` from accumulator
+**State sub-machine** (inside the top-level `CIRCULAR_SCROLL` state, technically a sub-state of `MAYBE_TAP`):
 
-This is the key fix over halfdane: **emit discrete scroll units when accumulated angle crosses a threshold**, not raw degrees as scroll values. Result: predictable scroll speed regardless of finger speed, no jitter-induced spurious scrolls.
+```
+        MAYBE_TAP
+            │ touch in rim
+            ▼
+      ┌─────────────────┐
+      │ SCROLL_DETECTING│  — cursor motion suppressed
+      └─┬───────────┬───┘
+        │           │
+   <trigger_px      ≥ trigger_px moved
+   no decision yet  │
+        │     ┌─────┴────────────┐
+        │     │ measure angle    │
+        │     │ relative to      │
+        │     │ radial direction │
+        │     └─────┬────────────┘
+        │           │
+        │      ┌────┴────┐
+        │      │         │
+        │   tangential  radial
+        │   (>50°)      (<50°)
+        │      │         │
+        ▼      ▼         ▼
+      (still   SCROLL_VALID  NOT_SCROLL
+       detecting)  │         (release suppression,
+                   │          fall back to MOVING)
+                   ▼
+              emit wheel
+              clicks based
+              on angle accum
+```
 
-**Tunables**:
+**Algorithm details:**
+
+1. **Entry to SCROLL_DETECTING**: touch lands and `radial_distance / active_radius >= (1 - circular-scroll-rim-pct/100)`. Record `(x0, y0)` and start tracking. Cursor motion is suppressed during this phase.
+2. **In SCROLL_DETECTING, per sample**: compute distance from initial touch point. If less than `circular-scroll-trigger-px` units moved, stay in DETECTING.
+3. **At `trigger_px`**: compute the angle of the motion vector relative to the radial direction from center. If the angle is greater than `circular-scroll-trigger-angle` (default 50°), motion is mostly tangential → transition to SCROLL_VALID. Otherwise (motion is mostly radial, e.g., the user is reaching toward the center for a click) → transition to NOT_SCROLL, release the suppressed cursor events.
+4. **In SCROLL_VALID, per sample**: compute current angle from center `θ = atan2f(y - cy, x - cx)`. Accumulate angular delta `Δθ` (normalized to `[-π, π]`). When `|angle_accum| >= 2π / wheel-clicks`, emit `INPUT_REL_WHEEL` with `sign(angle_accum)` and subtract that quantum from the accumulator. Keep the remainder for sub-click precision.
+
+This guards against the two failure modes that plague naive circular-scroll implementations:
+- False positive: user touches rim for cursor work, gets stuck in scroll mode (solved by tangential validation)
+- Jitter spurious scrolls: tiny angle wiggle generates output (solved by quantized emit on accumulator threshold)
+
+**Tunables** (defaults from QMK `[R7]`):
 - `circular-scroll-enable` (boolean)
-- `circular-scroll-rim-pct` — width of the activation rim as percent of radius (default 15)
-- `circular-scroll-emit-degrees` — how many degrees of rotation per scroll unit (default 20 — i.e., 18 scroll lines per full revolution)
+- `circular-scroll-rim-pct` — width of the activation rim as percent of radius (default 33; QMK uses 33, more forgiving than libinput-style narrow bands)
+- `circular-scroll-trigger-px` — motion required to validate (default 16; QMK uses 16)
+- `circular-scroll-trigger-angle-deg` — minimum angle of tangentiality to commit (default 50; QMK uses 50)
+- `circular-scroll-wheel-clicks` — scroll units per full revolution (default 18; QMK uses 18 ≈ one click every 20°)
 - `circular-scroll-direction` — `clockwise-down` / `clockwise-up` (default clockwise-down, matches macOS)
 
 ### 6.4 Edge scroll
@@ -394,10 +433,11 @@ This is the key fix over halfdane: **emit discrete scroll units when accumulated
 - Mirror of right-side but for X-axis motion in the topmost `edge-scroll-top-pct` of active area
 - Emits `INPUT_REL_HWHEEL`
 
-**Tunables**:
+**Tunables** (defaults from libinput `[R5]`):
 - `edge-scroll-right-enable`, `edge-scroll-top-enable` (booleans)
 - `edge-scroll-right-pct` / `edge-scroll-top-pct` — activation band width (default 12)
-- `edge-scroll-emit-pixels` — sensor units per scroll unit (default 50)
+- `edge-scroll-emit-pixels` — sensor units per scroll unit (default 130; libinput uses 3 mm ≈ 134 sensor units on Cirque GlidePoint Circle)
+- `edge-scroll-lock-timeout-ms` — if finger rests motionless in edge zone for this long, stop emitting scroll until movement resumes (default 300 ms; matches libinput's `DEFAULT_SCROLL_LOCK_TIMEOUT`)
 
 ### 6.5 Inertial cursor (coast)
 
@@ -525,7 +565,13 @@ Items I need to resolve before writing code (or that user testing must answer):
 
 - **`[R1] ✅ RESOLVED.`** Z is a 6-bit (0-63) contact-strength indicator, not true pressure. The chip itself uses (x=y=z=0) as its idle/no-touch flag, confirming Z is reliable as a presence signal. P4 (Z-based touch detection) stays in the design. See §2 for details.
 - **`[R2] ✅ RESOLVED.`** Input events dispatch on a dedicated input thread (Zephyr 4.1 default `CONFIG_INPUT_MODE_THREAD=y`). Delayed work fires on system work queue. Sync via `k_work_cancel_delayable_sync` on touch events; no long-term locks. Stack bump to 2048 minimum. See §4.3 for full analysis.
-- **`[R3]` ZMK split-input protocol event payload.** Verify that the central receives full `(type, code, value, sync)` semantics from the peripheral and whether timestamps survive the split hop.
+- **`[R3] ✅ RESOLVED.`** The split payload structure in [zmk/app/src/split/bluetooth/service.c](https://github.com/zmkfirmware/zmk/blob/main/app/src/split/bluetooth/service.c) is:
+  ```c
+  struct zmk_split_input_event_payload {
+      .type, .code, .value, .sync
+  };
+  ```
+  All four event fields preserved across BLE. **Timestamps are NOT carried**; the central re-stamps with `k_uptime_get()` on arrival. Position-based gestures (circular scroll, edge scroll, tap distance threshold) are unaffected. Inertia velocity is the only victim — BLE jitter (~5ms on a ~15ms Pinnacle sample interval) contaminates measured `dt`. **Design choice:** for inertia velocity estimation, use position deltas per sample with the configured Pinnacle sample rate as a constant assumption, not the measured `dt`. EWMA smoothing on top (P8) further reduces jitter sensitivity. For tap-window timing, central-side `k_uptime_get()` is correct anyway (user perceives tap duration at host).
 - **`[R4] ✅ RESOLVED.`** The upstream driver emits exactly three events per sample with sync set only on the third:
   ```c
   input_report_abs(dev, INPUT_ABS_X, sample->abs_x, false /* not sync */, ...);
@@ -533,9 +579,21 @@ Items I need to resolve before writing code (or that user testing must answer):
   input_report_abs(dev, INPUT_ABS_Z, sample->abs_z, true  /* SYNC */,     ...);
   ```
   Our sample-builder design is correct: accumulate (x, y, z) and act on the sync flag. The atomic sample unit is exactly the (X, Y, Z) triple.
-- **`[R5]` libinput tap and drag detection thresholds.** Pull their tuned values as a starting point for our defaults (rather than guessing).
-- **`[R6]` Whether ZMK supports per-instance DT param cells for input processors** — would allow `<&gesture_engine 1 0>` style invocation with per-position params.
-- **`[R7]` Survey other open-source touchpad firmware projects** (Ploopy, etc.) for inertial-decay tuning and circular-scroll deadband values.
+- **`[R5] ✅ RESOLVED.`** Mined libinput defaults from [`src/evdev-mt-touchpad-tap.c`](https://github.com/mix-mirror/libinput/blob/main/src/evdev-mt-touchpad-tap.c) and [`src/evdev-mt-touchpad-edge-scroll.c`](https://github.com/mix-mirror/libinput/blob/main/src/evdev-mt-touchpad-edge-scroll.c):
+  - `DEFAULT_TAP_TIMEOUT_PERIOD = 180 ms` → adopted as `tap-window-ms` default
+  - `DEFAULT_TAP_MOVE_THRESHOLD = 1.3 mm` → adopted as `tap-max-distance = 60` sensor units (on Cirque GlidePoint Circle ≈ 58 units)
+  - `DEFAULT_DRAG_TIMEOUT_PERIOD_BASE = 160 ms` (+ 20 ms/finger) → adopted as `drag-lock-window-ms = 180`
+  - `DEFAULT_DRAGLOCK_TIMEOUT_PERIOD = 300 ms` → adopted as `drag-lock-release-timeout-ms` for the timeout-release mode
+  - `DEFAULT_SCROLL_THRESHOLD = 3 mm` → adopted as `edge-scroll-emit-pixels = 130`
+  - `DEFAULT_SCROLL_LOCK_TIMEOUT = 300 ms` → adopted as `edge-scroll-lock-timeout-ms`
+  
+  These give us defensible starting points backed by 15 years of touchpad UX tuning; we'll iterate from here. Inertial scrolling (different math) and pointer acceleration curves left for hardware testing — libinput's accel is complex and our nonlinear quadratic default should be fine.
+- **`[R6] ✅ RESOLVED.`** Yes — ZMK supports up to 2 param cells per processor invocation (`param1`, `param2` in [`zmk_input_processor_entry`](https://github.com/zmkfirmware/zmk/blob/main/app/include/drivers/input_processor.h)). Cells are declared via `#input-processor-cells = <N>` in the binding (halfdane uses 0 cells via `ip_zero_param.yaml`). **Design decision**: we use **zero cells** like halfdane did. Layer-conditional behavior comes from the input-listener's existing `layers = <RAISE>;` mechanism (which we already use for RAISE-as-scroll), not from per-invocation params. Simpler, and the use case for per-invocation params (running the same processor with different settings) doesn't apply here — we'd just register multiple processor instances if we needed variant behaviors.
+- **`[R7] ✅ RESOLVED.`** QMK's [`drivers/sensors/cirque_pinnacle_gestures.{h,c}`](https://github.com/qmk/qmk_firmware/blob/master/drivers/sensors/cirque_pinnacle_gestures.c) is the goldmine — they've been doing absolute-mode Cirque gestures for years on physical keyboards. Key insights adopted:
+  - Two-phase circular scroll with a `SCROLL_DETECTING` validation state (see §6.3 redesign).
+  - Tangential-vs-radial angle validation prevents false-positive scrolls when user reaches toward center.
+  - Default values: `outer_ring_pct = 33`, `trigger_px = 16`, `trigger_ang = 50°`, `wheel_clicks = 18`. We adopt all four as our defaults.
+  - QMK has a separate `cursor_glide` system (= inertial cursor); their implementation lives in `pointing_device_drivers.c`. Worth a deeper look during the inertial-cursor implementation phase to compare against our exp-decay design — they likely use a simpler linear decay, but their thresholds for "fling magnitude" are useful prior art.
 
 ### Pending hardware verification (user does this once we have a build)
 

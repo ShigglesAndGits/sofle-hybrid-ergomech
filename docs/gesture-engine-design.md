@@ -343,14 +343,18 @@ tap-tap-drag sequence:
   finger up                   → release button, → INERTIAL_COAST or IDLE
 ```
 
-**Tunables** (defaults sourced from libinput's tuned values where available — see `[R5]`):
+**Tunables** (defaults sourced from libinput's tuned values where available — see `[R5]`). Two independent toggles control the drag behavior, mirroring libinput's model:
+
 - `tap-window-ms` — max duration of a tap (default 180 ms; libinput uses 180 — 15+ years of touchpad tuning agree).
 - `tap-max-distance` — max movement during tap window in sensor units (default 60; libinput uses 1.3 mm, which on Cirque GlidePoint Circle 40mm with default Zephyr scaling ≈ 58 sensor units).
 - `tap-button` — which mouse button to send (default `MB1`)
-- `drag-lock-enable` (boolean)
-- `drag-lock-window-ms` — time after first tap during which a second touch starts a drag (default 180 ms; libinput uses 160 ms base + 20 ms/finger).
-- `drag-lock-release-mode` — `sticky` (tap to release, default) or `timeout` (release after no contact for N ms; libinput offers both).
-- `drag-lock-release-timeout-ms` — only used in timeout mode (default 300 ms; matches libinput).
+- `drag-enable` (boolean, default `true`) — does a tap followed by a touch within `drag-window-ms` start a drag at all? Disabling means taps are always just clicks; the follow-up-touch pattern is ignored.
+- `drag-window-ms` — time after first tap during which a second touch starts a drag (default 180 ms; libinput uses 160 ms base + 20 ms/finger).
+- `drag-lock-mode` — what happens to the held button at end of a drag. Three values:
+  - `off` — finger lift releases the button immediately. Classic tap-and-drag.
+  - `sticky` (default per `[D3]`) — finger lift keeps button held; next finger-down resumes the drag; a single tap releases.
+  - `timeout` — finger lift keeps button held for `drag-lock-release-timeout-ms`, then auto-releases if no new touch arrives.
+- `drag-lock-release-timeout-ms` — only used when `drag-lock-mode = timeout` (default 300 ms; matches libinput's `DEFAULT_DRAGLOCK_TIMEOUT_PERIOD`).
 
 ### 6.2 Cursor motion
 
@@ -495,13 +499,15 @@ properties:
   touch-z-threshold:        { type: int, default: 30 }
   touch-end-timeout-ms:     { type: int, default: 30 }  # fallback if Z unreliable
 
-  # tap
-  tap-enable:               { type: boolean }
-  tap-window-ms:            { type: int, default: 200 }
-  tap-max-distance:         { type: int, default: 64 }
-  tap-button:               { type: int, default: 0 }  # MB1=0, MB2=1, MB3=2
-  drag-lock-enable:         { type: boolean }
-  drag-lock-window-ms:      { type: int, default: 250 }
+  # tap + drag
+  tap-enable:                  { type: boolean }
+  tap-window-ms:               { type: int, default: 180 }
+  tap-max-distance:            { type: int, default: 60 }
+  tap-button:                  { type: int, default: 0 }  # MB1=0, MB2=1, MB3=2
+  drag-enable:                 { type: boolean }  # default true via Kconfig
+  drag-window-ms:              { type: int, default: 180 }
+  drag-lock-mode:              { type: string, default: "sticky", enum: ["off", "sticky", "timeout"] }
+  drag-lock-release-timeout-ms:{ type: int, default: 300 }
 
   # cursor motion
   cursor-scale-num:         { type: int, default: 1 }
@@ -607,10 +613,11 @@ Items I need to resolve before writing code (or that user testing must answer):
 
 - **`[D2] ✅ DECIDED: A`** — per-layer gesture sets. Different layers can have completely different processor chains in their input-listener block. Default layer gets the full engine; RAISE gets a scroll-only chain; future layers (precision mode, navigation mode) get their own profiles. The cost is more DT wiring per layer, but combined with D1=B that wiring is just composing existing processor nodes, not configuring monolithic internals.
 
-- **`[D3] ✅ DECIDED: both modes, configurable; default = immediate (Mode A)`** — the real distinction between modes is what happens to the held button when the finger lifts at end of drag:
-  - **Mode A (`drag-lock-release-mode = immediate`, default)**: lift finger → button released immediately, drag ends. libinput's default. Best for short/simple drags.
-  - **Mode B (`drag-lock-release-mode = sticky`)**: lift finger → button stays held; next finger-down resumes drag; single tap releases. Best for long/multi-segment drags (drawing curves, multi-stage selections).
-  - Both modes are implemented; user opts into sticky via the DT property. Defaults to immediate because it's the less-surprising behavior for new users.
+- **`[D3] ✅ DECIDED: all three modes configurable; default = `sticky`** — mirrors libinput's model. Three release behaviors after a drag, controlled by `drag-lock-mode`:
+  - `off` (Mode A from original D3 framing): finger lift → button released immediately. Best for short/simple drags.
+  - `sticky` (Mode B, **default per user preference**): finger lift → button stays held; next finger-down resumes the drag; a single tap releases. Best for long/multi-segment drags (drawing curves, multi-stage selections, the user's workflow).
+  - `timeout`: finger lift → button stays held for `drag-lock-release-timeout-ms` (default 300 ms, matches libinput); auto-releases if no new touch arrives.
+  - All three implemented; user toggles via DT property. See §6.1 tunables.
 
 - **`[D4] ✅ DECIDED: snappy (cancel on touch)`** — new touch during INERTIAL_COAST immediately cancels the coast (calls `k_work_cancel_delayable_sync` on the coast tick) and transitions to MAYBE_TAP for the new touch. Future option `inertial-on-touch = cancel | absorb` may be added if users want the continuous-feel alternative, but default behavior is locked as cancel.
 

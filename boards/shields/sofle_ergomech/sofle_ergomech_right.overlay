@@ -41,5 +41,6 @@
         data-ready-gpios = <&pro_micro 1 GPIO_ACTIVE_LOW>;
         invert-x;
         sensitivity = "1x";
+        primary-tap-enable;
     };
 };

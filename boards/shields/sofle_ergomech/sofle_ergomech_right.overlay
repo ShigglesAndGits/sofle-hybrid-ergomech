@@ -38,7 +38,7 @@
         compatible = "cirque,pinnacle";
         reg = <0x2a>;
         status = "okay";
-        data-ready-gpios = <&pro_micro 1 GPIO_ACTIVE_LOW>;
+        data-ready-gpios = <&pro_micro 1 GPIO_ACTIVE_HIGH>;
         invert-x;
         sensitivity = "1x";
         primary-tap-enable;

@@ -10,13 +10,16 @@ Standard QWERTY. Number row on top, `Grave`/`Minus` on the corners, shifts on
 both bottom corners.
 
 Thumb cluster (left→right across both halves): outer tap-dance ALT (double
-tap = play/pause), `GUI`, `Ctrl`, `Space`, LOWER/NAV tap dance, then
-RAISE/WORK tap dance, `Enter`, `RCtrl`, context menu, outer tap-dance ALT.
+tap = play/pause, 100ms term), `GUI`, `Ctrl`, `Space`, `&mo LOWER` (plain
+momentary — instant), then RAISE/WORK tap dance, `Enter`, `RCtrl`, context
+menu, and a dedicated `Alt+Tab` on the outer key (tap = quick-switch between
+the two most recent windows; press-and-hold = the switcher stays open and
+key repeat cycles it forward).
 
 Encoder: smooth scroll (`&msc MOVE_UP/DOWN`, magnitude set by
 `ZMK_POINTING_DEFAULT_MOVE_VAL` in the keymap header).
 
-## 1 — LOWER (hold left inner thumb)
+## 1 — LOWER (hold left inner thumb — instant)
 
 - Top row: `F1`–`F12`.
 - Right hand: numpad layout (`7 8 9` / `4 5 6` / `1 2 3`, bottom `+ 0 / . *`)
@@ -37,28 +40,17 @@ Encoder: arrow `Down`/`Up` steps.
 
 Encoder: window minimize/maximize (`GUI+Down` / `GUI+Up`).
 
-## 3 — NAV (double tap-hold left inner thumb)
-
-COSMIC window management, left hand:
-
-- `Super+↑/↓/←/→` in a vim-style block (focus window in direction)
-- `Super+Q` close, `Super+G` float toggle, `Super+M` maximize,
-  `Super+W` workspaces
-- `Ctrl+Alt+Del` on the bottom corner
-
-Encoder: stepped scroll (`&msc SCRL_UP/DOWN`).
-
-## 4 — WORK (double tap-hold right inner thumb)
+## 3 — WORK (double tap-hold right inner thumb)
 
 - `Ctrl+Alt+Break`, `Ctrl+Alt+End`, `Ctrl+Alt+Del` on the right home row
-  (remote-session/KVM control)
+  (RDP session control — daily use)
 - `NumLock` above them
 
 Encoder: volume down/up.
 
-## 5 — SYSTEM (hold NAV + WORK simultaneously)
+## 4 — SYSTEM (hold LOWER + RAISE simultaneously)
 
-Conditional layer (`if-layers = <NAV WORK>`).
+Conditional tri-layer (`if-layers = <LOWER RAISE>`).
 
 - Top row: `F1`–`F12`
 - `&bt BT_CLR` (clears the *active profile's* bond — use with intent)

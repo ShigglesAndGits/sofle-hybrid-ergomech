@@ -1,3 +1,6 @@
+> **Status: shelved as of 2026-07-17** — keeping the research, but no keys are
+> reserved for it and no implementation is planned right now.
+
 # Gesture Engine — Design Document
 
 **Status:** Draft. Open questions inline as `[RESEARCH]` and `[VERIFY]` markers.

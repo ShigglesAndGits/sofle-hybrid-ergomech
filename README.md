@@ -27,27 +27,23 @@ for details.
 | # | Layer | Access | Encoder |
 |---|-------|--------|---------|
 | 0 | BASE | default | smooth scroll |
-| 1 | LOWER | hold left inner thumb (single tap-hold) | arrow down/up |
+| 1 | LOWER | hold left inner thumb (plain momentary, instant) | arrow down/up |
 | 2 | RAISE | hold right inner thumb (single tap-hold) | window minimize/maximize (GUI+Down/Up) |
-| 3 | NAV | double tap-hold left inner thumb | scroll (stepped) |
-| 4 | WORK | double tap-hold right inner thumb | volume |
-| 5 | SYSTEM | hold NAV + WORK together (conditional layer) | volume |
+| 3 | WORK | double tap-hold right inner thumb | volume |
+| 4 | SYSTEM | hold LOWER + RAISE together (tri-layer) | volume |
 
 Layer highlights:
 
-- **BASE** — QWERTY; both outer thumb keys are a tap dance: single tap ALT,
-  double tap play/pause.
+- **BASE** — QWERTY. Left outer thumb is a tap dance (tap ALT, double-tap
+  play/pause, 100ms term); right outer thumb is a dedicated **Alt+Tab**
+  (tap = quick-switch, hold = cycle the switcher via key repeat).
 - **LOWER** — F-row, right-hand numpad with brackets, mouse buttons on the
   left home row (MB1/MB2/MB3 plus MB4/MB5), BLE profile select on the bottom
   row, copy (`Ctrl+C`) and plain paste (`Ctrl+Shift+V`).
 - **RAISE** — navigation cluster (`Home/PgDn/PgUp/End`) above vim-style
   arrows on the right hand, `Del`/`Backspace`; the trackpad switches from
   cursor movement to scrolling while this layer is held.
-- **NAV** — COSMIC window management: `Super+arrows` to focus, close
-  (`Super+Q`), float (`Super+G`), maximize (`Super+M`), workspaces
-  (`Super+W`), and `Ctrl+Alt+Del`.
-- **WORK** — `Ctrl+Alt+Break/End/Del` chords (remote session control) and
-  NumLock.
+- **WORK** — `Ctrl+Alt+Break/End/Del` chords (daily RDP driver) and NumLock.
 - **SYSTEM** — F-row, `&bt BT_CLR`, BLE profile select, misc system keys.
 
 ## Bluetooth

@@ -1,6 +1,11 @@
 # TODO
 
-- [ ] Find functions for the remaining right thumb buttons
+- [ ] Find functions for the remaining right thumb buttons (RCTRL and
+      K_CMENU are confirmed-unused; Alt+Tab took the outer key 2026-07)
+- [ ] Gaming layer: revisit later — needs a trigger decision (&tog from
+      SYSTEM?) and plain instant mods, no tap dances
+- [ ] Consider zmk-tri-state "swapper" module for the Alt+Tab key if
+      hold-to-cycle via key repeat feels clumsy (adds reverse cycling)
 - [ ] BLE stability: verify the 1M PHY restore (2026-07). If wedges persist
       after a few days, apply stage 2: `CONFIG_BT_BUF_ACL_TX_COUNT=8` +
       `CONFIG_BT_BUF_EVT_RX_COUNT=16` (EVT_RX must exceed ACL_TX — that

@@ -8,7 +8,6 @@
 
  / {
      chosen {
-         zephyr,display = &oled;
          zmk,kscan = &kscan0;
          zmk,matrix-transform = &default_transform;
      };
@@ -88,24 +87,8 @@
         status = "disabled"; // Disabled by default, enabled on central overlay
     };
  };
- 
- &pro_micro_i2c {
-     status = "okay";
- 
-     oled: ssd1306@3c {
-         compatible = "solomon,ssd1306fb";
-         reg = <0x3c>;
-         width = <128>;
-         height = <32>;
-         segment-offset = <0>;
-         page-offset = <0>;
-         display-offset = <0>;
-         multiplex-ratio = <31>;
-         segment-remap;
-         com-invdir;
-         com-sequential;
-         inversion-on;
-         prechargep = <0x22>;
-     };
 
- };
+ // No shared I2C node here: the stock Sofle SSD1306 OLED is not fitted on
+ // either half (left uses nice!view via the adapter shield, which provides
+ // its own zephyr,display chosen). The right overlay enables &pro_micro_i2c
+ // for the Cirque trackpad.

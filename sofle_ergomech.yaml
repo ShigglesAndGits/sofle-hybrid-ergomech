@@ -57,9 +57,9 @@ layers:
   - lower
   - {t: RAISE, s: x2 WORK}
   - ENTER
-  - RCTRL
-  - CMENU
+  - DEL
   - Alt+TAB
+  - {t: Ctl+LALT, h: sticky}
   - ''
   - ''
   - ''
@@ -120,7 +120,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {type: held}
-  - +
+  - {t: ▽, type: trans}
   - '0'
   - /
   - .

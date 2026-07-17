@@ -11,10 +11,12 @@ both bottom corners.
 
 Thumb cluster (left→right across both halves): outer tap-dance ALT (double
 tap = play/pause, 100ms term), `GUI`, `Ctrl`, `Space`, `&mo LOWER` (plain
-momentary — instant), then RAISE/WORK tap dance, `Enter`, `RCtrl`, context
-menu, and a dedicated `Alt+Tab` on the outer key (tap = quick-switch between
-the two most recent windows; press-and-hold = the switcher stays open and
-key repeat cycles it forward).
+momentary — instant), then RAISE/WORK tap dance, `Enter`, `Del`, `Alt+Tab`
+(tap = quick-switch between the two most recent windows; press-and-hold =
+the switcher stays open and key repeat cycles it forward), and sticky
+`Ctrl+Alt` (`&sk LC(LALT)`) on the outer edge: tap it, release, and both
+mods apply to the next keypress (1s timeout). `Ctrl+Alt+Del` is therefore
+two adjacent-cluster thumb taps with no holding.
 
 Encoder: smooth scroll (`&msc MOVE_UP/DOWN`, magnitude set by
 `ZMK_POINTING_DEFAULT_MOVE_VAL` in the keymap header).
@@ -22,8 +24,10 @@ Encoder: smooth scroll (`&msc MOVE_UP/DOWN`, magnitude set by
 ## 1 — LOWER (hold left inner thumb — instant)
 
 - Top row: `F1`–`F12`.
-- Right hand: numpad layout (`7 8 9` / `4 5 6` / `1 2 3`, bottom `+ 0 / . *`)
+- Right hand: numpad layout (`7 8 9` / `4 5 6` / `1 2 3`, bottom `0 / . *`)
   with `( ) [ ] { }` on the two outer columns and `| =` on the edge.
+  Numpad `+` lives on RAISE's top-right corner; the inner right thumb is
+  transparent here so LOWER + that thumb reaches SYSTEM via the tri-layer.
 - Left hand: mouse buttons — `MB2 MB3 MB1` on the home row, `MB4`/`MB5` above,
   copy (`Ctrl+C`) and plain paste (`Ctrl+Shift+V`) on the inner column,
   `Backspace`/`Insert` on the outer column.

@@ -35,8 +35,10 @@ for details.
 Layer highlights:
 
 - **BASE** — QWERTY. Left outer thumb is a tap dance (tap ALT, double-tap
-  play/pause, 100ms term); right outer thumb is a dedicated **Alt+Tab**
-  (tap = quick-switch, hold = cycle the switcher via key repeat).
+  play/pause, 100ms term). Right thumb cluster outward from Enter: `Del`,
+  **Alt+Tab** (tap = quick-switch, hold = cycle via key repeat), and a
+  **sticky Ctrl+Alt** on the edge — tap it, then tap a target key and both
+  mods apply, no simultaneous holding (`Ctrl+Alt+Del` = two thumb taps).
 - **LOWER** — F-row, right-hand numpad with brackets, mouse buttons on the
   left home row (MB1/MB2/MB3 plus MB4/MB5), BLE profile select on the bottom
   row, copy (`Ctrl+C`) and plain paste (`Ctrl+Shift+V`).

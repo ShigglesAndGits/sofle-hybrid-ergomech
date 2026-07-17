@@ -1,7 +1,7 @@
 # TODO
 
-- [ ] Find functions for the remaining right thumb buttons (RCTRL and
-      K_CMENU are confirmed-unused; Alt+Tab took the outer key 2026-07)
+- [x] Right thumb buttons resolved 2026-07: Enter / Del / Alt+Tab /
+      sticky Ctrl+Alt (outward from inner). RCTRL and K_CMENU retired.
 - [ ] Gaming layer: revisit later — needs a trigger decision (&tog from
       SYSTEM?) and plain instant mods, no tap dances
 - [ ] Consider zmk-tri-state "swapper" module for the Alt+Tab key if

@@ -50,10 +50,11 @@
 
         // LOWER is a plain &mo on the thumb (instant, no tap-dance arbitration).
         // RAISE keeps a tap dance so double-tap-hold reaches WORK (RDP chords).
+        // 200ms term deliberate: 100ms made the WORK double-tap too tight.
         td_layer_work: tap_dance_layer_work {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <100>;
+            tapping-term-ms = <200>;
             bindings = <&mo RAISE>, <&mo WORK>;
         };
 
@@ -90,15 +91,17 @@
             // |  ESC  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   | BKSPC |
             // |  TAB  |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
             // | SHIFT |  Z  |  X  |  C   |  V   |  B   |                   |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-            //         | -   | ALT | GUI  | CTRL | SPACE| LOWER  | RSE/WORK | ENTER| RCTRL |K_CMENU| A+TAB |
-            // (ALT = tap dance: tap ALT, double-tap play/pause. A+TAB = Alt+Tab; hold to cycle via key repeat.)
+            //         | -   | ALT | GUI  | CTRL | SPACE| LOWER  | RSE/WORK | ENTER| DEL   | A+TAB | sC+A  |
+            // (ALT = tap dance: tap ALT, double-tap play/pause. A+TAB = Alt+Tab; hold to cycle via key repeat.
+            //  sC+A = sticky Ctrl+Alt: tap, then tap a target key - both mods apply to it, no holding.
+            //  Ctrl+Alt+Del = sC+A then DEL, two right-thumb taps.)
 
             bindings = <
 &kp GRAVE   &kp N1    &kp N2    &kp N3           &kp N4     &kp N5         &kp N6          &kp N7     &kp N8        &kp N9    &kp N0    &kp MINUS
 &kp ESC     &kp Q     &kp W     &kp E            &kp R      &kp T          &kp Y           &kp U      &kp I         &kp O     &kp P     &kp BACKSPACE
 &kp TAB     &kp A     &kp S     &kp D            &kp F      &kp G          &kp H           &kp J      &kp K         &kp L     &kp SEMI  &kp SQT
 &kp LSHIFT  &kp Z     &kp X     &kp C            &kp V      &kp B          &kp N           &kp M      &kp COMMA     &kp DOT   &kp FSLH  &kp RSHIFT
-&none       &td_alt_media  &kp LGUI  &kp LCTRL        &kp SPACE  &mo LOWER      &td_layer_work  &kp ENTER  &kp RCTRL     &kp K_CMENU  &kp LA(TAB)
+&none       &td_alt_media  &kp LGUI  &kp LCTRL        &kp SPACE  &mo LOWER      &td_layer_work  &kp ENTER  &kp DEL       &kp LA(TAB)  &sk LC(LALT)
                                                                            &none           &none      &none         &none     &none
             >;
 
@@ -113,15 +116,18 @@
             // | BKSPC |      | MB4  |      | MB5  | PASTE'|             |  7   |  8  |  9  |  (   |  )   | BKSPC |
             // |  INS  |      | MB2  | MB3  | MB1  | COPY  |             |  4   |  5  |  6  |  [   |  ]   |   |   |
             // |       | BT0  | BT1  | BT2  | BT3  | BT4   |             |  1   |  2  |  3  |  {   |  }   |   =   |
-            //         |      |      |      |      |       |             |  +   |  0  |  /  |  .   |  *   |
+            //         |      |      |      |      |       |             |  ▽   |  0  |  /  |  .   |  *   |
             // (PASTE' = plain paste Ctrl+Shift+V; MBx = mouse buttons; BTx = BLE profile select)
+            // Inner right thumb is transparent so LOWER + that thumb falls through
+            // to the RAISE tap dance -> LOWER+RAISE tri-layer -> SYSTEM.
+            // (Numpad plus lives on RAISE's top-right corner.)
 
             bindings = <
 &kp F1         &kp F2        &kp F3        &kp F4        &kp F5        &kp F6         &kp F7    &kp F8   &kp F9     &kp F10               &kp F11            &kp F12
 &kp BACKSPACE  &trans        &mkp MB4      &trans        &mkp MB5      &kp LC(LS(V))  &kp N7    &kp N8   &kp N9     &kp LEFT_PARENTHESIS  &kp RPAR           &kp BACKSPACE
 &kp INS        &trans        &mkp MB2      &mkp MB3      &mkp MB1      &kp LC(C)      &kp N4    &kp N5   &kp N6     &kp LEFT_BRACKET      &kp RIGHT_BRACKET  &kp PIPE
 &trans         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &kp N1    &kp N2   &kp N3     &kp LEFT_BRACE        &kp RIGHT_BRACE    &kp EQUAL
-&trans         &trans        &trans        &trans        &trans        &trans         &kp PLUS  &kp N0   &kp SLASH  &kp PERIOD            &kp ASTERISK
+&trans         &trans        &trans        &trans        &trans        &trans         &trans    &kp N0   &kp SLASH  &kp PERIOD            &kp ASTERISK
                                                                                       &none     &none    &none      &none                 &none
             >;
 

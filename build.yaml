@@ -12,6 +12,8 @@
 #     shield: reviung41
 #
 ---
+# nice_nano//zmk resolves to board revision 2.0.0 (nice!nano v2) by default;
+# see app/module/boards/nicekeyboards/nice_nano/board.yml in ZMK.
 include:
   - board: nice_nano//zmk
     shield: sofle_ergomech_left nice_view_adapter nice_view_gem

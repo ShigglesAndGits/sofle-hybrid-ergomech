@@ -3,9 +3,12 @@
  *
  * SPDX-License-Identifier: MIT
  */
-// Define scroll speed before including pointing header
+// Define pointing magnitudes before including the pointing header.
+// MOVE_VAL sets the magnitude of MOVE_* codes (default 600); we only use it
+// via encoder_scroll_alt's `&msc MOVE_UP/DOWN` smooth-scroll trick, where it
+// acts as the per-detent scroll amount. SCRL_VAL sets ordinary &msc tick size.
 
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 240  // default: 600 - controls smooth scroll sensitivity
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 240
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 12
 
 // Include pointing device bindings for mouse scroll
@@ -22,7 +25,6 @@
 #define NAV 3
 #define WORK 4
 #define SYSTEM 5
-#define ENCODER_DIR 6
 
 / {
     // Activate SYSTEM layer by pressing nav and work layers together
@@ -31,8 +33,8 @@
         compatible = "zmk,conditional-layers";
 
         system_layer {
-            if-layers = <3 4>;
-            then-layer = <5>;
+            if-layers = <NAV WORK>;
+            then-layer = <SYSTEM>;
         };
     };
 
@@ -78,251 +80,9 @@
             bindings = <&kp LG(DOWN)>, <&kp LG(UP)>;
         };
 
-        ctrlAltDel: ctrlAltDel {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL &kp LEFT_ALT>,
-                <&macro_tap>,
-                <&kp DEL>,
-                <&macro_release>,
-                <&kp LCTRL &kp LEFT_ALT>;
-
-            label = "CTRLALTDEL";
-        };
-
-        ctrlAltPause: ctrlAltPause {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL &kp LALT>,
-                <&macro_tap>,
-                <&kp PAUSE_BREAK>,
-                <&macro_release>,
-                <&kp LCTRL &kp LALT>;
-
-            label = "CTRLALTPAUSE";
-        };
-
-        ctrlAltEnd: ctrlAltEnd {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL &kp LALT>,
-                <&macro_tap>,
-                <&kp END>,
-                <&macro_release>,
-                <&kp LCTRL &kp LALT>;
-
-            label = "CTRLALTEND";
-        };
-
-        // Copy/Paste Macros
-
-        copy_macro: copy_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL>,
-                <&macro_tap>,
-                <&kp C>,
-                <&macro_release>,
-                <&kp LCTRL>;
-
-            label = "COPY_MACRO";
-        };
-
-        paste_plain: paste_plain {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL &kp LSHFT>,
-                <&macro_tap>,
-                <&kp V>,
-                <&macro_release>,
-                <&kp LCTRL &kp LSHFT>;
-
-            label = "PASTE_PLAIN";
-        };
-
-        // COSMIC Window Management
-
-        cs_float: cs_float {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp G>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "CS_FLOAT";
-        };
-
-        cs_max: cs_max {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp M>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "CS_MAX";
-        };
-
-        cs_close: cs_close {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp Q>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "CS_CLOSE";
-        };
-
-        cs_wk: cs_wk {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp W>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "CS_WK";
-        };
-
-        // Window Movement Macros (COSMIC)
-
-        mv_l: mv_l {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI &kp LSHFT>,
-                <&macro_tap>,
-                <&kp LEFT>,
-                <&macro_release>,
-                <&kp LGUI &kp LSHFT>;
-
-            label = "MV_L";
-        };
-
-        mv_r: mv_r {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI &kp LSHFT>,
-                <&macro_tap>,
-                <&kp RIGHT>,
-                <&macro_release>,
-                <&kp LGUI &kp LSHFT>;
-
-            label = "MV_R";
-        };
-
-        mv_u: mv_u {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI &kp LSHFT>,
-                <&macro_tap>,
-                <&kp UP>,
-                <&macro_release>,
-                <&kp LGUI &kp LSHFT>;
-
-            label = "MV_U";
-        };
-
-        mv_d: mv_d {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI &kp LSHFT>,
-                <&macro_tap>,
-                <&kp DOWN>,
-                <&macro_release>,
-                <&kp LGUI &kp LSHFT>;
-
-            label = "MV_D";
-        };
-
-        // COSMIC Navigation Macros (Super+Direction)
-
-        nav_l: nav_l {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp LEFT>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "NAV_L";
-        };
-
-        nav_r: nav_r {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp RIGHT>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "NAV_R";
-        };
-
-        nav_u: nav_u {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp UP>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "NAV_U";
-        };
-
-        nav_d: nav_d {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LGUI>,
-                <&macro_tap>,
-                <&kp DOWN>,
-                <&macro_release>,
-                <&kp LGUI>;
-
-            label = "NAV_D";
-        };
+        // Plain modified keypresses (COSMIC window management, copy/paste,
+        // ctrl-alt chords) are bound directly as &kp LG(...)/LC(...) in the
+        // layers below - no macros needed, and held keys get host auto-repeat.
 
         // ALT tap dance behavior - single tap ALT, double tap play/pause
         td_alt_media: tap_dance_alt_media {
@@ -362,21 +122,21 @@
         lower_layer {
             label = "lower";
 
-            // TODO: Some binds are waiting for shifted keycode support.
             // ------------------------------------------------------------------------------------------------------------
-            // |       |  F1 |  F2 |  F3  |  F4  |  F5  |                   |  F6  |  F7   |  F8   |  F9  |  F10  |  F11  |
-            // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |  F12  |
-            // |       |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   |   |
-            // |       |  =  |  -  |  +   |  {   |  }   |        |  |       |  [   |  ]    |  ;    |  :   |   \   |       |
-            //               |     |      |      |      |        |  |       |      |       |       |      |
+            // |  F1   |  F2  |  F3  |  F4  |  F5  |  F6   |             |  F7  |  F8 |  F9 |  F10 |  F11 |  F12  |
+            // | BKSPC |      | MB4  |      | MB5  | PASTE'|             |  7   |  8  |  9  |  (   |  )   | BKSPC |
+            // |  INS  |      | MB2  | MB3  | MB1  | COPY  |             |  4   |  5  |  6  |  [   |  ]   |   |   |
+            // |       | BT0  | BT1  | BT2  | BT3  | BT4   |             |  1   |  2  |  3  |  {   |  }   |   =   |
+            //         |      |      |      |      |       |             |  +   |  0  |  /  |  .   |  *   |
+            // (PASTE' = plain paste Ctrl+Shift+V; MBx = mouse buttons; BTx = BLE profile select)
 
             bindings = <
-&kp F1         &kp F2        &kp F3        &kp F4        &kp F5        &kp F6        &kp F7    &kp F8   &kp F9     &kp F10               &kp F11            &kp F12
-&kp BACKSPACE  &trans        &mkp MB4      &trans        &mkp MB5      &paste_plain  &kp N7    &kp N8   &kp N9     &kp LEFT_PARENTHESIS  &kp RPAR           &kp BACKSPACE
-&kp INS        &trans        &mkp MB2      &mkp MB3      &mkp MB1      &copy_macro   &kp N4    &kp N5   &kp N6     &kp LEFT_BRACKET      &kp RIGHT_BRACKET  &kp PIPE
-&trans         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &kp N1    &kp N2   &kp N3     &kp LEFT_BRACE        &kp RIGHT_BRACE    &kp EQUAL
-&trans         &trans        &trans        &trans        &trans        &trans        &kp PLUS  &kp N0   &kp SLASH  &kp PERIOD            &kp ASTERISK
-                                                                                     &none     &none    &none      &none                 &none
+&kp F1         &kp F2        &kp F3        &kp F4        &kp F5        &kp F6         &kp F7    &kp F8   &kp F9     &kp F10               &kp F11            &kp F12
+&kp BACKSPACE  &trans        &mkp MB4      &trans        &mkp MB5      &kp LC(LS(V))  &kp N7    &kp N8   &kp N9     &kp LEFT_PARENTHESIS  &kp RPAR           &kp BACKSPACE
+&kp INS        &trans        &mkp MB2      &mkp MB3      &mkp MB1      &kp LC(C)      &kp N4    &kp N5   &kp N6     &kp LEFT_BRACKET      &kp RIGHT_BRACKET  &kp PIPE
+&trans         &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &kp N1    &kp N2   &kp N3     &kp LEFT_BRACE        &kp RIGHT_BRACE    &kp EQUAL
+&trans         &trans        &trans        &trans        &trans        &trans         &kp PLUS  &kp N0   &kp SLASH  &kp PERIOD            &kp ASTERISK
+                                                                                      &none     &none    &none      &none                 &none
             >;
 
             sensor-bindings = <&inc_dec_kp DOWN UP>;
@@ -386,11 +146,12 @@
             label = "raise";
 
             // ------------------------------------------------------------------------------------------------------------
-            // | BTCLR | BT1  | BT2  |  BT3  |  BT4  |  BT5 |                |      |      |       |      |       |       |
-            // |       | INS  | PSCR | GUI   |       |      |                | PGUP |      |   ^   |      |       |       |
-            // |       | ALT  | CTRL | SHIFT |       | CAPS |                | PGDN |   <- |   v   |  ->  |  DEL  | BKSPC |
-            // |       | UNDO | CUT  | COPY  | PASTE |      |      |  |      |      |      |       |      |       |       |
-            //                |      |       |       |      |      |  |      |      |      |       |      |
+            // |       |     |     |      |      |      |          |      |      |      |      |      |   +   |
+            // |       |     |     |      |      |      |          |  \   | HOME | PGDN | PGUP | END  |  DEL  |
+            // |       |     |     |      |      |      |          |      |  <-  |  v   |  ^   |  ->  |       |
+            // |       |     |     |      |      |      |          |      |      |      |      |      |       |
+            //         |     |     |      |      |      |          |      |      |      |      |
+            // Encoder: window minimize/maximize (GUI+Down / GUI+Up). Trackpad scrolls on this layer.
 
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans    &trans    &trans     &trans     &kp PLUS
@@ -407,20 +168,22 @@
         nav_layer {
             label = "nav";
 
+            // COSMIC window management (Super-based chords)
             // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            //               |     |      |      |      |                |      |      |       |      |
+            // |       |       |      |       |       |        |          |  |  |  |  |  |  |
+            // | CLOSE |       |  ^   |       | FLOAT | FLOAT  |          |  |  |  |  |  |  |
+            // |       |  <-   |  v   |  ->   |  MAX  | WKSPC  |          |  |  |  |  |  |  |
+            // | C-A-D |       |      |       |       |        |          |  |  |  |  |  |  |
+            //         |       |      |       |       |        |          |  |  |  |  |
+            // (arrows = focus window in direction; CLOSE=GUI+Q, FLOAT=GUI+G, MAX=GUI+M, WKSPC=GUI+W)
 
             bindings = <
-&trans       &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&cs_close    &trans  &nav_u  &trans      &cs_float  &cs_float  &trans  &trans  &trans  &trans  &trans  &trans
-&trans       &nav_l  &nav_d  &nav_r      &cs_max    &cs_wk     &trans  &trans  &trans  &trans  &trans  &trans
-&ctrlAltDel  &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
-&trans       &trans  &trans  &trans      &trans     &trans     &trans  &trans  &trans  &trans  &trans
-                                                               &none   &none   &none   &none   &none
+&trans          &trans        &trans       &trans        &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&kp LG(Q)       &trans        &kp LG(UP)   &trans        &kp LG(G)  &kp LG(G)  &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &kp LG(LEFT)  &kp LG(DOWN) &kp LG(RIGHT) &kp LG(M)  &kp LG(W)  &trans  &trans  &trans  &trans  &trans  &trans
+&kp LC(LA(DEL)) &trans        &trans       &trans        &trans     &trans     &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &trans        &trans       &trans        &trans     &trans     &trans  &trans  &trans  &trans  &trans
+                                                                               &none   &none   &none   &none   &none
             >;
 
             sensor-bindings = <&encoder_scroll>;
@@ -429,20 +192,22 @@
         work_layer {
             label = "work";
 
+            // Ctrl+Alt chords (KVM / remote-session control) + NumLock
             // ------------------------------------------------------------------------------------------------------------
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            // |       |     |     |      |      |      |                |      |      |       |      |       |       |
-            //               |     |      |      |      |                |      |      |       |      |
+            // |  |  |  |  |  |  |          |         |        |       |        |     |  |
+            // |  |  |  |  |  |  |          |         |        |       | NUMLK  |     |  |
+            // |  |  |  |  |  |  |          | C-A-Brk | C-A-End| C-A-D |        |     |  |
+            // |  |  |  |  |  |  |          |         |        |       |        |     |  |
+            //    |  |  |  |  |  |          |         |        |       |        |
+            // Encoder: volume down/up
 
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans       &trans       &trans      &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans       &trans       &kp KP_NUM  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &ctrlAltPause  &ctrlAltEnd  &ctrlAltDel  &trans      &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans       &trans       &trans      &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans         &trans       &trans       &trans
-                                                &none   &none          &none        &none        &none
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                   &trans           &trans           &trans      &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                   &trans           &trans           &kp KP_NUM  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LC(LA(PAUSE_BREAK))  &kp LC(LA(END))  &kp LC(LA(DEL))  &trans      &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                   &trans           &trans           &trans      &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans                   &trans           &trans           &trans
+                                                &none   &none                    &none            &none            &none
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
@@ -470,19 +235,6 @@
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
-        encoder_dir_layer {
-            label = "encoder_dir";
-            bindings = <
-&trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&mkp LCLK     &mkp RCLK       &mkp MCLK     &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&msc SCRL_UP  &msc SCRL_DOWN  &mmv MOVE_UP  &mmv MOVE_DOWN  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans        &trans          &trans        &trans          &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-                                                                            &none   &none   &none   &none   &none
-            >;
-
-            sensor-bindings = <&encoder_scroll_alt>;
-        };
     };
 
 };

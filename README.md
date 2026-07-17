@@ -1,110 +1,71 @@
 # Sofle Hybrid Ergomech ZMK Configuration
 
-This repository contains my custom ZMK configuration for the Sofle Hybrid keyboard, featuring an ergonomic layout with multiple layers optimized for programming, system management, and window control.
+Custom ZMK firmware for a [Sofle Hybrid](https://ergomech.store/) split keyboard:
+wireless, trackpad-equipped, and tuned for COSMIC desktop window management.
 
-## Layout Overview
+## Hardware
 
-The keyboard uses 8 distinct layers:
+| | Left half | Right half |
+|---|---|---|
+| Controller | nice!nano v2 | nice!nano v2 |
+| Split role | Central (talks to hosts) | Peripheral (talks to left half) |
+| Display | nice!view with [nice-view-gem](https://github.com/M165437/nice-view-gem) custom screen | none |
+| Pointing | — | Cirque Pinnacle trackpad (I2C, tap-to-click) |
+| Encoder | EC11 | EC11 |
+| Power | 18650 cell | 18650 cell |
 
+Firmware builds run on GitHub Actions (`build.yaml`); ZMK is pinned to a fixed
+revision in `config/west.yml` (Zephyr 4.1 era). Flash the matching
+`sofle_ergomech_left`/`sofle_ergomech_right` UF2 from the workflow artifacts,
+plus `settings_reset` when bonds need clearing.
 
-1. **BASE (0)** - Standard QWERTY layout with optimized thumb cluster
-2. **LOWER (1)** - Numbers, symbols, and basic functions
-3. **RAISE (2)** - Additional symbols and media controls
-4. **NAV (3)** - Navigation and text editing
-5. **WORK (4)** - Workspace and application management
-6. **SYSTEM (5)** - System controls (activated by NAV + WORK)
-7. **RESIZE_LAYER (6)** - Window resizing controls
-8. **RESIZE_SHIFT (7)** - Additional window management (activated by RESIZE + LOWER)
+## Layers
 
-## Special Features
+See [keymap.svg](keymap.svg) for the full picture and [LAYERS.md](LAYERS.md)
+for details.
 
-### Display Features
+| # | Layer | Access | Encoder |
+|---|-------|--------|---------|
+| 0 | BASE | default | smooth scroll |
+| 1 | LOWER | hold left inner thumb (single tap-hold) | arrow down/up |
+| 2 | RAISE | hold right inner thumb (single tap-hold) | window minimize/maximize (GUI+Down/Up) |
+| 3 | NAV | double tap-hold left inner thumb | scroll (stepped) |
+| 4 | WORK | double tap-hold right inner thumb | volume |
+| 5 | SYSTEM | hold NAV + WORK together (conditional layer) | volume |
 
+Layer highlights:
 
-- OLED display on left shield only (right shield display disabled)
-- WPM (Words Per Minute) counter
-- Layer status indicator
-- Battery status with percentage
-- Output status indicator
-- 10-second display timeout when idle
-- 1-second refresh rate
+- **BASE** — QWERTY; both outer thumb keys are a tap dance: single tap ALT,
+  double tap play/pause.
+- **LOWER** — F-row, right-hand numpad with brackets, mouse buttons on the
+  left home row (MB1/MB2/MB3 plus MB4/MB5), BLE profile select on the bottom
+  row, copy (`Ctrl+C`) and plain paste (`Ctrl+Shift+V`).
+- **RAISE** — navigation cluster (`Home/PgDn/PgUp/End`) above vim-style
+  arrows on the right hand, `Del`/`Backspace`; the trackpad switches from
+  cursor movement to scrolling while this layer is held.
+- **NAV** — COSMIC window management: `Super+arrows` to focus, close
+  (`Super+Q`), float (`Super+G`), maximize (`Super+M`), workspaces
+  (`Super+W`), and `Ctrl+Alt+Del`.
+- **WORK** — `Ctrl+Alt+Break/End/Del` chords (remote session control) and
+  NumLock.
+- **SYSTEM** — F-row, `&bt BT_CLR`, BLE profile select, misc system keys.
 
-### Tap Dance Layers
+## Bluetooth
 
-- `td_layer_nav`: Single tap for LOWER, double tap for NAV
-- `td_layer_work`: Single tap for RAISE, double tap for WORK
+Five BLE profiles; select with `&bt BT_SEL 0-4` on LOWER or SYSTEM, clear the
+active profile's bond with `&bt BT_CLR` on SYSTEM. Windows-compat decisions
+(static address instead of RPA, legacy-pairing fallback, 1M PHY) are documented
+inline in `config/sofle_ergomech.conf`; split-link tuning notes live in the
+per-half `.conf` files under `boards/shields/sofle_ergomech/`.
 
-### Window Management
+## Regenerating the keymap diagram
 
-- COSMIC window management macros for floating, maximizing, and fullscreen
-- Dedicated resize layer with directional controls
-- Window movement and snapping capabilities
-
-### System Controls
-
-- Media playback controls via ALT double-tap (play/pause anywhere)
-- Volume control via WORK layer encoder
-- System management shortcuts (Ctrl+Alt+Del, etc.)
-- Quick screenshot capability (Super+Shift+S)
-- Terminal launcher (Super+T)
-
-### Conditional Layers
-
-- SYSTEM layer activates automatically when NAV and WORK are held together
-- RESIZE_SHIFT activates when RESIZE_LAYER and LOWER are combined
-
-### Encoder Configuration
-- Default: Smooth scrolling (moved from LOWER layer)
-- LOWER layer: Arrow key navigation UP/DOWN (inverted direction, moved from BASE)
-- NAV layer: Workspace switching (Super+Tab / Super+Shift+Tab)
-- WORK layer: Application switching (Alt+Tab / Alt+Shift+Tab)
-- Resize layer: Window size adjustment
-
-## Layer Details
-
-### Base Layer
-
-- Standard QWERTY layout
-- Optimized thumb cluster with Space, Enter, and layer access
-- Shift keys on both sides
-- GUI, Alt (with double-tap media play/pause), and Ctrl modifiers readily accessible
-- Encoder provides smooth scrolling functionality
-
-### Navigation Layer (NAV)
-
-- Arrow keys in vim-style HJKL configuration
-- Text selection and manipulation
-- Encoder for workspace switching
-
-### Lower Layer
-
-- Numbers, symbols, and mouse controls
-- Page Up, Page Down, Home, and End navigation keys
-- Encoder provides arrow key navigation (UP/DOWN, inverted direction)
-
-### Raise Layer
-
-- Function keys and additional symbols
-- Page Up, Page Down, Home, and End navigation keys (same as LOWER layer)
-- Trackpad scrolling with inverted left/right movement for proper scroll direction
-
-### Work Layer (WORK)
-
-- Window and workspace management
-- Application switching via encoder
-- Task management shortcuts
-- Numlock key in upper-right position
-
-### System Layer
-
-- Activated by combining NAV + WORK
-- System controls and power management
-- Special function keys
-
-## Contributing
-
-This is a personal configuration that's constantly evolving. Feel free to use it as inspiration for your own layout!
+```sh
+pipx install keymap-drawer
+keymap -c keymap_drawer.config.yaml parse -z config/sofle_ergomech.keymap -o sofle_ergomech.yaml
+keymap -c keymap_drawer.config.yaml draw sofle_ergomech.yaml -j config/info.json -o keymap.svg
+```
 
 ## License
 
-This configuration is released under the MIT License. See the included license file for details.
+MIT.

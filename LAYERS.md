@@ -1,144 +1,68 @@
-# Detailed Layer Documentation
+# Layer Reference
 
-This document provides in-depth information about each layer's key mappings and special functions.
+Authoritative source: `config/sofle_ergomech.keymap` (each layer has an ASCII
+diagram comment kept in sync with its bindings). Visual reference:
+[keymap.svg](keymap.svg), regenerated with keymap-drawer (see README).
 
-## Base Layer (0)
+## 0 — BASE
 
-The base layer follows a standard QWERTY layout with ergonomic optimizations:
+Standard QWERTY. Number row on top, `Grave`/`Minus` on the corners, shifts on
+both bottom corners.
 
-```ascii
-┌─────────┬─────┬─────┬─────┬─────┬─────┐                  ┌─────┬─────┬─────┬─────┬─────┬─────────┐
-│   `     │  1  │  2  │  3  │  4  │  5  │                  │  6  │  7  │  8  │  9  │  0  │   -     │
-├─────────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────────┤
-│   ESC   │  Q  │  W  │  E  │  R  │  T  │                  │  Y  │  U  │  I  │  O  │  P  │ BKSPACE │
-├─────────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────────┤
-│   TAB   │  A  │  S  │  D  │  F  │  G  │                  │  H  │  J  │  K  │  L  │  ;  │    '    │
-├─────────┼─────┼─────┼─────┼─────┼─────┤                  ├─────┼─────┼─────┼─────┼─────┼─────────┤
-│  SHIFT  │  Z  │  X  │  C  │  V  │  B  │                  │  N  │  M  │  ,  │  .  │  /  │  SHIFT  │
-└─────────┴─────┴─────┴─────┴─────┴─────┘                  └─────┴─────┴─────┴─────┴─────┴─────────┘
-                      ┌─────┬─────┬─────┐                  ┌─────┬─────┬─────┐
-                      │ GUI │ ALT │CTRL │                  │ NAV │WORK │ CTL │
-                      └─────┴─────┴─────┘                  └─────┴─────┴─────┘
-```
+Thumb cluster (left→right across both halves): outer tap-dance ALT (double
+tap = play/pause), `GUI`, `Ctrl`, `Space`, LOWER/NAV tap dance, then
+RAISE/WORK tap dance, `Enter`, `RCtrl`, context menu, outer tap-dance ALT.
 
-### Thumb Cluster
+Encoder: smooth scroll (`&msc MOVE_UP/DOWN`, magnitude set by
+`ZMK_POINTING_DEFAULT_MOVE_VAL` in the keymap header).
 
-- Left: GUI, ALT (double-tap for media play/pause), CTRL
-- Right: NAV (tap dance), WORK (tap dance), CTRL
+## 1 — LOWER (hold left inner thumb)
 
-### Encoders
+- Top row: `F1`–`F12`.
+- Right hand: numpad layout (`7 8 9` / `4 5 6` / `1 2 3`, bottom `+ 0 / . *`)
+  with `( ) [ ] { }` on the two outer columns and `| =` on the edge.
+- Left hand: mouse buttons — `MB2 MB3 MB1` on the home row, `MB4`/`MB5` above,
+  copy (`Ctrl+C`) and plain paste (`Ctrl+Shift+V`) on the inner column,
+  `Backspace`/`Insert` on the outer column.
+- Bottom row left: `&bt BT_SEL 0-4` (BLE profile select).
 
-- Default Layer: Smooth scrolling (moved from LOWER layer)
-- LOWER Layer: Arrow key navigation UP/DOWN (inverted direction, moved from BASE)
-- NAV Layer: Workspace switching (Super+Tab / Super+Shift+Tab)
-- WORK Layer: Application switching (Alt+Tab / Alt+Shift+Tab)
-- Resize Layer: Window size adjustment
+Encoder: arrow `Down`/`Up` steps.
 
-### Display Features
+## 2 — RAISE (hold right inner thumb)
 
-- OLED display enabled only on left shield
-- Battery percentage indicator
-- WPM (Words Per Minute) counter
-- Layer status display
-- Output status indicator
-- 10-second timeout when idle
-- 1-second refresh rate
+- Right hand: `Home PgDn PgUp End` row above vim-style arrows
+  (`← ↓ ↑ →`), `Del`, `Backspace`, `\`, `+` on the corner.
+- Trackpad: converted to a scroller while held
+  (`zip_xy_scaler 1 4` + `zip_xy_to_scroll_mapper`), cursor movement off.
 
-## Lower Layer (1)
+Encoder: window minimize/maximize (`GUI+Down` / `GUI+Up`).
 
-Activated by single-tapping the NAV key. Contains numbers, symbols, and navigation functions:
+## 3 — NAV (double tap-hold left inner thumb)
 
-- Numbers and symbols in numpad layout
-- Mouse controls (left, right, middle, scroll buttons)
-- Navigation keys: Page Up, Page Down, Home, End (right thumb cluster)
-- Encoder provides UP/DOWN arrow key navigation (inverted direction)
-- Bluetooth device selection
+COSMIC window management, left hand:
 
-## Raise Layer (2)
+- `Super+↑/↓/←/→` in a vim-style block (focus window in direction)
+- `Super+Q` close, `Super+G` float toggle, `Super+M` maximize,
+  `Super+W` workspaces
+- `Ctrl+Alt+Del` on the bottom corner
 
-Activated by single-tapping the WORK key. Contains function keys and navigation:
+Encoder: stepped scroll (`&msc SCRL_UP/DOWN`).
 
-- Function keys F1-F12 arranged in groups
-- Navigation keys: Page Up, Page Down, Home, End (right thumb cluster, same as LOWER)
-- Trackpad scrolling mode with proper left/right scroll direction (X-axis inverted)
-- Additional symbols and shortcuts
+## 4 — WORK (double tap-hold right inner thumb)
 
-## Navigation Layer (3)
+- `Ctrl+Alt+Break`, `Ctrl+Alt+End`, `Ctrl+Alt+Del` on the right home row
+  (remote-session/KVM control)
+- `NumLock` above them
 
-Activated by double-tapping the NAV key. Focuses on window management and navigation:
+Encoder: volume down/up.
 
-- COSMIC window management macros
-- Window movement and positioning controls
-- Encoder provides workspace switching (Super+Tab / Super+Shift+Tab)
+## 5 — SYSTEM (hold NAV + WORK simultaneously)
 
-## Work Layer (4)
+Conditional layer (`if-layers = <NAV WORK>`).
 
-Activated by double-tapping the WORK key. Focused on window and workspace management. Features application switching via encoder:
+- Top row: `F1`–`F12`
+- `&bt BT_CLR` (clears the *active profile's* bond — use with intent)
+- `&bt BT_SEL 0-4` on the left home row
+- `Del End Pause Esc` cluster on the right
 
-- COSMIC window controls:
-  - Float (Super + G)
-  - Maximize (Super + M)
-  - Fullscreen (Super + F)
-  - Close (Super + Q)
-- Workspace navigation
-- Application switching
-- Task management
-- Numlock toggle (upper-right position)
-  - Convenient access for occasional numpad use
-
-## System Layer (5)
-
-Automatically activated when holding both NAV and WORK:
-
-- Power management
-- System shortcuts:
-  - Ctrl+Alt+Del
-  - Ctrl+Alt+End
-  - Ctrl+Alt+Pause
-- Task manager access
-- System monitoring tools
-
-## Resize Layer (6)
-
-Dedicated to window management:
-
-- Window movement (arrows)
-- Window snapping
-- Size adjustment
-- Position control
-- Encoder functions:
-  - Left encoder: Horizontal resize
-  - Right encoder: Vertical resize
-
-## Resize Shift Layer (7)
-
-Advanced window management features activated by combining RESIZE and LOWER:
-
-- Fine-grained window control
-- Advanced snapping options
-- Multi-monitor management
-- Workspace organization
-
-## Special Features
-
-### Tap Dance Behaviors
-
-- NAV key:
-  - Single tap: LOWER layer
-  - Double tap: Navigation layer
-- WORK key:
-  - Single tap: RAISE layer
-  - Double tap: Work layer
-- ALT keys (both left and right):
-  - Single tap: ALT modifier
-  - Double tap: Media play/pause
-
-### Conditional Layers
-
-1. System Layer Activation:
-   - Triggered by: NAV + WORK
-   - Provides quick access to system controls
-
-2. Resize Shift Activation:
-   - Triggered by: RESIZE + LOWER
-   - Enables advanced window management
+Encoder: volume down/up.

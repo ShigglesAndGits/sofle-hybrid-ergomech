@@ -10,7 +10,7 @@ jobs:
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: matrix
         run: echo "matrix=$(yq -oj -I0 build.yaml)" >> "$GITHUB_OUTPUT"
 
@@ -24,14 +24,14 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build, validate, and retain diagnostics
         env:
           TARGET: ${{ matrix.artifact-name }}
         run: python3 scripts/build.py "$TARGET"
       - name: Upload firmware and diagnostic symbols
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: artifact-${{ matrix.artifact-name }}
           path: build-output/
@@ -41,7 +41,7 @@ jobs:
     needs: build
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/upload-artifact/merge@v4
+      - uses: actions/upload-artifact/merge@v7
         with:
           name: firmware
           pattern: artifact-*

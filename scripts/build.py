@@ -46,7 +46,8 @@ def main():
                          cwd=workspace, capture=True).strip()
             if actual != project["revision"]:
                 raise RuntimeError(f"Lost ZMK override for {project['name']}: {actual}")
-    manifest = run("west", "manifest", "--freeze", cwd=workspace, capture=True)
+    # Optional simulator projects are intentionally not cloned by west update.
+    manifest = run("west", "manifest", "--freeze", "--active-only", cwd=workspace, capture=True)
     (output / "west-frozen.yml").write_text(manifest)
     checksums = []
     for patch in sorted((ROOT / "patches").glob("*.patch")):

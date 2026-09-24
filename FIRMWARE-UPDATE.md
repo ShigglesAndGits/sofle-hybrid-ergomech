@@ -67,11 +67,12 @@ of the new profile issue.
 2. Remove the Sofle pairing from each host that will be paired again, including
    the host using the formerly retained working slot.
 3. Connect one half over USB and double-tap its reset button to enter the UF2
-   bootloader. Copy `settings-reset.uf2` to its bootloader drive. Let it boot and
-   run for several seconds (at least five) before entering the bootloader again.
-4. Flash `sofle-left.uf2` to the **left** half or `sofle-right.uf2` to the
-   **right** half as appropriate. Repeat reset + correct firmware on the other
-   half. The same nice!nano reset image is used on both halves.
+   bootloader. Copy `settings-reset.uf2` to its bootloader drive and let it boot
+   and run for several seconds (at least five). Repeat on the other half. Reset
+   **both halves before restoring normal firmware**, so they cannot re-pair with
+   stale split state mid-reset. The same nice!nano reset image is used on both.
+4. Re-enter each half's bootloader. Flash `sofle-left.uf2` to the **left** half
+   and `sofle-right.uf2` to the **right** half.
 5. Power both halves fully off (USB disconnected and battery switches off), then
    turn both on near each other to establish their split connection. Confirm
    keys on both halves work, initially over USB if useful.
@@ -82,6 +83,7 @@ of the new profile issue.
    power-cycle persistence.
 
 Do not leave the settings-reset image installed as normal firmware.
+This ordering follows the [official ZMK reset procedure](https://zmk.dev/docs/troubleshooting/connection-issues#reset-split-keyboard-procedure).
 
 ## Verification and rollback
 

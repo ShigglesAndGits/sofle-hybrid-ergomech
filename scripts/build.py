@@ -55,7 +55,10 @@ def main():
         run("git", "apply", patch, cwd=workspace / "zmk")
         checksums.append(f"{hashlib.sha256(patch.read_bytes()).hexdigest()}  {patch.name}")
     (output / "patches.sha256").write_text("\n".join(checksums) + "\n")
-    (output / "config-commit.txt").write_text(run("git", "rev-parse", "HEAD", cwd=ROOT, capture=True))
+    # Actions' checkout is mounted from a differently-owned runner directory;
+    # use its verified checkout SHA without changing global git trust settings.
+    config_commit = os.getenv("GITHUB_SHA") or run("git", "rev-parse", "HEAD", cwd=ROOT, capture=True).strip()
+    (output / "config-commit.txt").write_text(config_commit + "\n")
     run("python3", ROOT / "tests/test_split_input_queue.py", workspace / "zmk", cwd=ROOT)
     run("west", "zephyr-export", cwd=workspace)
 

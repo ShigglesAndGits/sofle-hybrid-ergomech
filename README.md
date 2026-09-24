@@ -14,10 +14,16 @@ wireless, trackpad-equipped, and tuned for COSMIC desktop window management.
 | Encoder | EC11 | EC11 |
 | Power | 18650 cell | 18650 cell |
 
-Firmware builds run on GitHub Actions (`build.yaml`); ZMK is pinned to a fixed
-revision in `config/west.yml` (Zephyr 4.1 era). Flash the matching
-`sofle_ergomech_left`/`sofle_ergomech_right` UF2 from the workflow artifacts,
-plus `settings_reset` when bonds need clearing.
+Firmware builds run on GitHub Actions (`build.yaml`). ZMK, Zephyr's supported
+4.1 fixes branch, and nice-view-gem are pinned to exact revisions in
+`config/west.yml`; the build image is pinned by digest. `scripts/build.py`
+applies the reviewed split-input patch and verifies the resolved dependencies.
+The `firmware` artifact contains `sofle-left/sofle-left.uf2`,
+`sofle-right/sofle-right.uf2`, and `settings-reset/settings-reset.uf2`, plus
+resolved configs, manifests, checksums, and ELF symbols for diagnostics.
+
+See [FIRMWARE-UPDATE.md](FIRMWARE-UPDATE.md) for the September 2026 fixes,
+their limitations, reset/flash sequence, and rollback baseline.
 
 ## Layers
 

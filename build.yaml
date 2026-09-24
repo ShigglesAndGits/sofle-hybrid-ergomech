@@ -17,11 +17,14 @@
 include:
   - board: nice_nano//zmk
     shield: sofle_ergomech_left nice_view_adapter nice_view_gem
+    artifact-name: sofle-left
     # Central half logs position events for both halves (peripheral forwards
     # them over the split link), so USB CDC-ACM logging on the left captures
     # every keystroke. Temporary, for keymap heatmap/chord data collection.
     snippet: zmk-usb-logging
   - board: nice_nano//zmk
     shield: sofle_ergomech_right
+    artifact-name: sofle-right
   - board: nice_nano//zmk
     shield: settings_reset
+    artifact-name: settings-reset

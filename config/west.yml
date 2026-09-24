@@ -7,10 +7,35 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: ed56d81db79cf3a6e5dc02697277c0fad880ad34
+      revision: 9ebbeff0a8b69a42f14aec022cdf16c7a107b9e0
       import: app/west.yml
     - name: nice-view-gem
       remote: m165437
-      revision: main
+      revision: 0a50fe209d929c916c5664c6affd0f4977c6b012
+    # Root manifest wins over ZMK's floating Zephyr import. Keep its blocklist.
+    # Import ZMK first so its LVGL/hal_stm32 overrides precede Zephyr's defaults.
+    - name: zephyr
+      remote: zmkfirmware
+      revision: 10ba6d0cb38bc3d258775d27982f707599320085
+      clone-depth: 1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
   self:
     path: config

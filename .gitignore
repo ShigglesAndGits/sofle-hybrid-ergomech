@@ -1,1 +1,4 @@
 .idea
+/build-output/
+/firmware/
+__pycache__/

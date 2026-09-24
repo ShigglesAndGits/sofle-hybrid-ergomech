@@ -1,5 +1,48 @@
+name: Build pinned Sofle firmware
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: read
+
 jobs:
+  matrix:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: matrix
+        run: echo "matrix=$(yq -oj -I0 build.yaml)" >> "$GITHUB_OUTPUT"
+
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@ed56d81db79cf3a6e5dc02697277c0fad880ad34
+    needs: matrix
+    runs-on: ubuntu-24.04
+    container:
+      # zmk-build-arm:stable, linux/amd64, resolved 2026-09-24.
+      image: zmkfirmware/zmk-build-arm@sha256:ca4978c179533772d3a77296bc628f8a3ae1ed75ee1cc8b411570f9810fd821e
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build, validate, and retain diagnostics
+        env:
+          TARGET: ${{ matrix.artifact-name }}
+        run: python3 scripts/build.py "$TARGET"
+      - name: Upload firmware and diagnostic symbols
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.artifact-name }}
+          path: build-output/
+          if-no-files-found: error
+
+  merge:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/upload-artifact/merge@v4
+        with:
+          name: firmware
+          pattern: artifact-*
+          delete-merged: true
